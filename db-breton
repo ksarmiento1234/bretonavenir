@@ -1,0 +1,827 @@
+/****** Object:  Table [dbo].[app_modules]    Script Date: 30/04/2026 11:25:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[app_modules](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[code] [varchar](50) NOT NULL,
+	[name] [nvarchar](100) NOT NULL,
+	[description] [nvarchar](255) NULL,
+	[nav_section] [nvarchar](50) NULL,
+	[icon] [varchar](50) NULL,
+	[sort_order] [int] NULL,
+	[is_active] [bit] NULL,
+	[created_at] [datetime2](7) NULL,
+	[updated_at] [datetime2](7) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[code] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[audit_log]    Script Date: 30/04/2026 11:25:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[audit_log](
+	[id] [bigint] IDENTITY(1,1) NOT NULL,
+	[table_name] [varchar](100) NOT NULL,
+	[record_id] [uniqueidentifier] NOT NULL,
+	[action] [varchar](20) NOT NULL,
+	[old_values] [nvarchar](max) NULL,
+	[new_values] [nvarchar](max) NULL,
+	[changed_fields] [nvarchar](max) NULL,
+	[user_id] [uniqueidentifier] NULL,
+	[user_ip] [varchar](45) NULL,
+	[user_agent] [nvarchar](500) NULL,
+	[created_at] [datetime2](7) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[clients]    Script Date: 30/04/2026 11:25:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[clients](
+	[id] [uniqueidentifier] NOT NULL,
+	[code] [varchar](50) NULL,
+	[name] [nvarchar](200) NOT NULL,
+	[contact_name] [nvarchar](200) NULL,
+	[email] [varchar](255) NULL,
+	[phone] [varchar](20) NULL,
+	[address] [nvarchar](500) NULL,
+	[city] [nvarchar](100) NULL,
+	[state] [nvarchar](100) NULL,
+	[country] [nvarchar](100) NULL,
+	[tax_id] [varchar](50) NULL,
+	[notes] [nvarchar](max) NULL,
+	[is_active] [bit] NULL,
+	[created_at] [datetime2](7) NULL,
+	[updated_at] [datetime2](7) NULL,
+	[created_by] [uniqueidentifier] NULL,
+	[updated_by] [uniqueidentifier] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[code] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[expense_attachments]    Script Date: 30/04/2026 11:25:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[expense_attachments](
+	[id] [uniqueidentifier] NOT NULL,
+	[expense_id] [uniqueidentifier] NOT NULL,
+	[file_name] [nvarchar](255) NOT NULL,
+	[file_url] [varchar](500) NOT NULL,
+	[file_size] [int] NULL,
+	[file_type] [varchar](100) NULL,
+	[thumbnail_url] [varchar](500) NULL,
+	[is_receipt] [bit] NULL,
+	[sort_order] [int] NULL,
+	[is_active] [bit] NULL,
+	[created_at] [datetime2](7) NULL,
+	[uploaded_by] [uniqueidentifier] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[expense_types]    Script Date: 30/04/2026 11:25:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[expense_types](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[code] [varchar](50) NOT NULL,
+	[name] [nvarchar](100) NOT NULL,
+	[description] [nvarchar](255) NULL,
+	[icon] [varchar](50) NULL,
+	[requires_receipt] [bit] NULL,
+	[max_amount] [decimal](10, 2) NULL,
+	[is_active] [bit] NULL,
+	[created_at] [datetime2](7) NULL,
+	[updated_at] [datetime2](7) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[code] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[expenses]    Script Date: 30/04/2026 11:25:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[expenses](
+	[id] [uniqueidentifier] NOT NULL,
+	[project_id] [uniqueidentifier] NOT NULL,
+	[user_id] [uniqueidentifier] NOT NULL,
+	[expense_type_id] [int] NOT NULL,
+	[description] [nvarchar](500) NOT NULL,
+	[amount] [decimal](10, 2) NOT NULL,
+	[currency] [varchar](3) NULL,
+	[expense_date] [date] NOT NULL,
+	[vendor_name] [nvarchar](200) NULL,
+	[receipt_number] [varchar](100) NULL,
+	[status] [varchar](50) NULL,
+	[approved_by] [uniqueidentifier] NULL,
+	[approved_at] [datetime2](7) NULL,
+	[rejection_reason] [nvarchar](500) NULL,
+	[reimbursed_at] [datetime2](7) NULL,
+	[reimbursement_reference] [varchar](100) NULL,
+	[notes] [nvarchar](max) NULL,
+	[is_active] [bit] NULL,
+	[created_at] [datetime2](7) NULL,
+	[updated_at] [datetime2](7) NULL,
+	[created_by] [uniqueidentifier] NULL,
+	[updated_by] [uniqueidentifier] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[note_attachments]    Script Date: 30/04/2026 11:25:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[note_attachments](
+	[id] [uniqueidentifier] NOT NULL,
+	[note_id] [uniqueidentifier] NOT NULL,
+	[file_name] [nvarchar](255) NOT NULL,
+	[file_url] [varchar](500) NOT NULL,
+	[file_size] [int] NULL,
+	[file_type] [varchar](100) NULL,
+	[thumbnail_url] [varchar](500) NULL,
+	[sort_order] [int] NULL,
+	[is_active] [bit] NULL,
+	[created_at] [datetime2](7) NULL,
+	[uploaded_by] [uniqueidentifier] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[NYUTC]    Script Date: 30/04/2026 11:25:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[NYUTC](
+	[timediff] [int] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[observation_types]    Script Date: 30/04/2026 11:25:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[observation_types](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[code] [varchar](50) NOT NULL,
+	[name] [nvarchar](100) NOT NULL,
+	[description] [nvarchar](255) NULL,
+	[icon] [varchar](50) NULL,
+	[color] [varchar](50) NULL,
+	[is_active] [bit] NULL,
+	[created_at] [datetime2](7) NULL,
+	[updated_at] [datetime2](7) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[code] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[project_assignments]    Script Date: 30/04/2026 11:25:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[project_assignments](
+	[id] [uniqueidentifier] NOT NULL,
+	[project_id] [uniqueidentifier] NOT NULL,
+	[user_id] [uniqueidentifier] NOT NULL,
+	[role] [varchar](50) NULL,
+	[hourly_rate] [decimal](10, 2) NULL,
+	[assigned_date] [date] NULL,
+	[end_date] [date] NULL,
+	[is_active] [bit] NULL,
+	[created_at] [datetime2](7) NULL,
+	[updated_at] [datetime2](7) NULL,
+	[created_by] [uniqueidentifier] NULL,
+	[updated_by] [uniqueidentifier] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+ CONSTRAINT [UQ_project_user] UNIQUE NONCLUSTERED 
+(
+	[project_id] ASC,
+	[user_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[project_notes]    Script Date: 30/04/2026 11:25:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[project_notes](
+	[id] [uniqueidentifier] NOT NULL,
+	[project_id] [uniqueidentifier] NOT NULL,
+	[user_id] [uniqueidentifier] NOT NULL,
+	[observation_type_id] [int] NULL,
+	[title] [nvarchar](200) NULL,
+	[content] [nvarchar](max) NOT NULL,
+	[is_important] [bit] NULL,
+	[is_visible_to_client] [bit] NULL,
+	[is_active] [bit] NULL,
+	[created_at] [datetime2](7) NULL,
+	[updated_at] [datetime2](7) NULL,
+	[created_by] [uniqueidentifier] NULL,
+	[updated_by] [uniqueidentifier] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[project_status]    Script Date: 30/04/2026 11:25:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[project_status](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[code] [varchar](50) NOT NULL,
+	[name] [nvarchar](100) NOT NULL,
+	[description] [nvarchar](255) NULL,
+	[color] [varchar](7) NULL,
+	[sort_order] [int] NULL,
+	[is_active] [bit] NULL,
+	[created_at] [datetime2](7) NULL,
+	[updated_at] [datetime2](7) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[code] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[project_types]    Script Date: 30/04/2026 11:25:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[project_types](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[code] [varchar](50) NOT NULL,
+	[name] [nvarchar](100) NOT NULL,
+	[description] [nvarchar](255) NULL,
+	[color] [varchar](20) NULL,
+	[is_active] [bit] NOT NULL,
+	[created_at] [datetime2](7) NOT NULL,
+	[updated_at] [datetime2](7) NULL,
+ CONSTRAINT [PK_project_types] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[code] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[projects]    Script Date: 30/04/2026 11:25:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[projects](
+	[id] [uniqueidentifier] NOT NULL,
+	[code] [varchar](50) NOT NULL,
+	[name] [nvarchar](200) NOT NULL,
+	[description] [nvarchar](max) NULL,
+	[client_id] [uniqueidentifier] NULL,
+	[status_id] [int] NULL,
+	[color] [varchar](50) NULL,
+	[address] [nvarchar](500) NULL,
+	[city] [nvarchar](100) NULL,
+	[latitude] [decimal](10, 8) NULL,
+	[longitude] [decimal](11, 8) NULL,
+	[start_date] [date] NULL,
+	[estimated_end_date] [date] NULL,
+	[actual_end_date] [date] NULL,
+	[budget_hours] [decimal](10, 2) NULL,
+	[budget_amount] [decimal](15, 2) NULL,
+	[hourly_rate] [decimal](10, 2) NULL,
+	[progress_percentage] [decimal](5, 2) NULL,
+	[is_active] [bit] NULL,
+	[created_at] [datetime2](7) NULL,
+	[updated_at] [datetime2](7) NULL,
+	[created_by] [uniqueidentifier] NULL,
+	[updated_by] [uniqueidentifier] NULL,
+	[project_type_id] [int] NULL,
+	[state] [varchar](50) NULL,
+	[company] [varchar](50) NULL,
+	[google_maps_link] [nvarchar](500) NULL,
+	[zipcode] [nvarchar](20) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[refunds_deductions]    Script Date: 30/04/2026 11:25:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[refunds_deductions](
+	[id] [uniqueidentifier] NOT NULL,
+	[user_id] [uniqueidentifier] NOT NULL,
+	[project_id] [uniqueidentifier] NULL,
+	[type] [varchar](20) NOT NULL,
+	[description] [nvarchar](500) NOT NULL,
+	[amount] [decimal](10, 2) NOT NULL,
+	[currency] [varchar](3) NOT NULL,
+	[effective_date] [date] NOT NULL,
+	[status] [varchar](50) NOT NULL,
+	[approved_by] [uniqueidentifier] NULL,
+	[approved_at] [datetime2](7) NULL,
+	[rejection_reason] [nvarchar](500) NULL,
+	[applied_at] [datetime2](7) NULL,
+	[payroll_reference] [varchar](100) NULL,
+	[notes] [nvarchar](max) NULL,
+	[is_active] [bit] NULL,
+	[created_at] [datetime2](7) NOT NULL,
+	[updated_at] [datetime2](7) NULL,
+	[created_by] [uniqueidentifier] NOT NULL,
+	[updated_by] [uniqueidentifier] NULL,
+ CONSTRAINT [PK_refunds_deductions] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[refunds_deductions_attachments]    Script Date: 30/04/2026 11:25:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[refunds_deductions_attachments](
+	[id] [uniqueidentifier] NOT NULL,
+	[refund_deduction_id] [uniqueidentifier] NOT NULL,
+	[file_name] [nvarchar](255) NOT NULL,
+	[file_url] [varchar](500) NOT NULL,
+	[file_size] [int] NULL,
+	[file_type] [varchar](100) NULL,
+	[thumbnail_url] [varchar](500) NULL,
+	[is_primary] [bit] NULL,
+	[sort_order] [int] NULL,
+	[is_active] [bit] NULL,
+	[created_at] [datetime2](7) NOT NULL,
+	[uploaded_by] [uniqueidentifier] NULL,
+ CONSTRAINT [PK_refunds_deductions_attachments] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[time_entries]    Script Date: 30/04/2026 11:25:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[time_entries](
+	[id] [uniqueidentifier] NOT NULL,
+	[project_id] [uniqueidentifier] NOT NULL,
+	[user_id] [uniqueidentifier] NOT NULL,
+	[entry_type_id] [int] NULL,
+	[clock_in_time] [datetime2](7) NOT NULL,
+	[clock_in_latitude] [decimal](10, 8) NULL,
+	[clock_in_longitude] [decimal](11, 8) NULL,
+	[clock_in_address] [nvarchar](500) NULL,
+	[clock_in_photo_url] [varchar](500) NULL,
+	[clock_in_device_info] [nvarchar](255) NULL,
+	[clock_out_time] [datetime2](7) NULL,
+	[clock_out_latitude] [decimal](10, 8) NULL,
+	[clock_out_longitude] [decimal](11, 8) NULL,
+	[clock_out_address] [nvarchar](500) NULL,
+	[clock_out_photo_url] [varchar](500) NULL,
+	[clock_out_device_info] [nvarchar](255) NULL,
+	[total_hours]  AS (CONVERT([decimal](10,2),datediff(minute,[clock_in_time],[clock_out_time])/(60.0))) PERSISTED,
+	[break_minutes] [int] NULL,
+	[billable_hours] [decimal](10, 2) NULL,
+	[hourly_rate] [decimal](10, 2) NULL,
+	[total_amount]  AS ([billable_hours]*[hourly_rate]) PERSISTED,
+	[status] [varchar](50) NULL,
+	[notes] [nvarchar](max) NULL,
+	[approved_by] [uniqueidentifier] NULL,
+	[approved_at] [datetime2](7) NULL,
+	[is_active] [bit] NULL,
+	[created_at] [datetime2](7) NULL,
+	[updated_at] [datetime2](7) NULL,
+	[created_by] [uniqueidentifier] NULL,
+	[updated_by] [uniqueidentifier] NULL,
+	[notes_edit] [nvarchar](max) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[time_entry_types]    Script Date: 30/04/2026 11:25:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[time_entry_types](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[code] [varchar](50) NOT NULL,
+	[name] [nvarchar](100) NOT NULL,
+	[description] [nvarchar](255) NULL,
+	[is_active] [bit] NULL,
+	[created_at] [datetime2](7) NULL,
+	[updated_at] [datetime2](7) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[code] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[user_module_permissions]    Script Date: 30/04/2026 11:25:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[user_module_permissions](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[user_id] [uniqueidentifier] NOT NULL,
+	[module_id] [int] NOT NULL,
+	[permission_level] [varchar](20) NOT NULL,
+	[is_allowed] [bit] NOT NULL,
+	[created_at] [datetime2](7) NULL,
+	[created_by] [uniqueidentifier] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[user_id] ASC,
+	[module_id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[user_sessions]    Script Date: 30/04/2026 11:25:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[user_sessions](
+	[id] [uniqueidentifier] NOT NULL,
+	[user_id] [uniqueidentifier] NOT NULL,
+	[token_hash] [varchar](255) NOT NULL,
+	[device_info] [nvarchar](255) NULL,
+	[ip_address] [varchar](45) NULL,
+	[user_agent] [nvarchar](500) NULL,
+	[expires_at] [datetime2](7) NOT NULL,
+	[last_activity_at] [datetime2](7) NULL,
+	[is_active] [bit] NULL,
+	[created_at] [datetime2](7) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[users]    Script Date: 30/04/2026 11:25:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[users](
+	[id] [uniqueidentifier] NOT NULL,
+	[employee_code] [varchar](50) NULL,
+	[email] [varchar](255) NOT NULL,
+	[password_hash] [varchar](255) NOT NULL,
+	[first_name] [nvarchar](100) NOT NULL,
+	[last_name] [nvarchar](100) NOT NULL,
+	[phone] [varchar](20) NULL,
+	[profile_photo_url] [varchar](500) NULL,
+	[hourly_rate] [decimal](10, 2) NULL,
+	[role] [varchar](50) NULL,
+	[is_active] [bit] NULL,
+	[last_login_at] [datetime2](7) NULL,
+	[created_at] [datetime2](7) NULL,
+	[updated_at] [datetime2](7) NULL,
+	[created_by] [uniqueidentifier] NULL,
+	[updated_by] [uniqueidentifier] NULL,
+	[identification_number] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[email] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[employee_code] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[app_modules] ADD  DEFAULT ((0)) FOR [sort_order]
+GO
+ALTER TABLE [dbo].[app_modules] ADD  DEFAULT ((1)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[app_modules] ADD  DEFAULT (sysutcdatetime()) FOR [created_at]
+GO
+ALTER TABLE [dbo].[app_modules] ADD  DEFAULT (sysutcdatetime()) FOR [updated_at]
+GO
+ALTER TABLE [dbo].[audit_log] ADD  DEFAULT (getutcdate()) FOR [created_at]
+GO
+ALTER TABLE [dbo].[clients] ADD  DEFAULT (newid()) FOR [id]
+GO
+ALTER TABLE [dbo].[clients] ADD  DEFAULT ('Chile') FOR [country]
+GO
+ALTER TABLE [dbo].[clients] ADD  DEFAULT ((1)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[clients] ADD  DEFAULT (getutcdate()) FOR [created_at]
+GO
+ALTER TABLE [dbo].[clients] ADD  DEFAULT (getutcdate()) FOR [updated_at]
+GO
+ALTER TABLE [dbo].[expense_attachments] ADD  DEFAULT (newid()) FOR [id]
+GO
+ALTER TABLE [dbo].[expense_attachments] ADD  DEFAULT ((1)) FOR [is_receipt]
+GO
+ALTER TABLE [dbo].[expense_attachments] ADD  DEFAULT ((0)) FOR [sort_order]
+GO
+ALTER TABLE [dbo].[expense_attachments] ADD  DEFAULT ((1)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[expense_attachments] ADD  DEFAULT (getutcdate()) FOR [created_at]
+GO
+ALTER TABLE [dbo].[expense_types] ADD  DEFAULT ((1)) FOR [requires_receipt]
+GO
+ALTER TABLE [dbo].[expense_types] ADD  DEFAULT ((1)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[expense_types] ADD  DEFAULT (getutcdate()) FOR [created_at]
+GO
+ALTER TABLE [dbo].[expense_types] ADD  DEFAULT (getutcdate()) FOR [updated_at]
+GO
+ALTER TABLE [dbo].[expenses] ADD  DEFAULT (newid()) FOR [id]
+GO
+ALTER TABLE [dbo].[expenses] ADD  DEFAULT ('CLP') FOR [currency]
+GO
+ALTER TABLE [dbo].[expenses] ADD  DEFAULT ('pending') FOR [status]
+GO
+ALTER TABLE [dbo].[expenses] ADD  DEFAULT ((1)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[expenses] ADD  DEFAULT (getutcdate()) FOR [created_at]
+GO
+ALTER TABLE [dbo].[expenses] ADD  DEFAULT (getutcdate()) FOR [updated_at]
+GO
+ALTER TABLE [dbo].[note_attachments] ADD  DEFAULT (newid()) FOR [id]
+GO
+ALTER TABLE [dbo].[note_attachments] ADD  DEFAULT ((0)) FOR [sort_order]
+GO
+ALTER TABLE [dbo].[note_attachments] ADD  DEFAULT ((1)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[note_attachments] ADD  DEFAULT (getutcdate()) FOR [created_at]
+GO
+ALTER TABLE [dbo].[observation_types] ADD  DEFAULT ((1)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[observation_types] ADD  DEFAULT (getutcdate()) FOR [created_at]
+GO
+ALTER TABLE [dbo].[observation_types] ADD  DEFAULT (getutcdate()) FOR [updated_at]
+GO
+ALTER TABLE [dbo].[project_assignments] ADD  DEFAULT (newid()) FOR [id]
+GO
+ALTER TABLE [dbo].[project_assignments] ADD  DEFAULT ('worker') FOR [role]
+GO
+ALTER TABLE [dbo].[project_assignments] ADD  DEFAULT (getdate()) FOR [assigned_date]
+GO
+ALTER TABLE [dbo].[project_assignments] ADD  DEFAULT ((1)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[project_assignments] ADD  DEFAULT (getutcdate()) FOR [created_at]
+GO
+ALTER TABLE [dbo].[project_assignments] ADD  DEFAULT (getutcdate()) FOR [updated_at]
+GO
+ALTER TABLE [dbo].[project_notes] ADD  DEFAULT (newid()) FOR [id]
+GO
+ALTER TABLE [dbo].[project_notes] ADD  DEFAULT ((0)) FOR [is_important]
+GO
+ALTER TABLE [dbo].[project_notes] ADD  DEFAULT ((0)) FOR [is_visible_to_client]
+GO
+ALTER TABLE [dbo].[project_notes] ADD  DEFAULT ((1)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[project_notes] ADD  DEFAULT (getutcdate()) FOR [created_at]
+GO
+ALTER TABLE [dbo].[project_notes] ADD  DEFAULT (getutcdate()) FOR [updated_at]
+GO
+ALTER TABLE [dbo].[project_status] ADD  DEFAULT ((0)) FOR [sort_order]
+GO
+ALTER TABLE [dbo].[project_status] ADD  DEFAULT ((1)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[project_status] ADD  DEFAULT (getutcdate()) FOR [created_at]
+GO
+ALTER TABLE [dbo].[project_status] ADD  DEFAULT (getutcdate()) FOR [updated_at]
+GO
+ALTER TABLE [dbo].[project_types] ADD  CONSTRAINT [DF_project_types_is_active]  DEFAULT ((1)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[project_types] ADD  CONSTRAINT [DF_project_types_created_at]  DEFAULT (sysutcdatetime()) FOR [created_at]
+GO
+ALTER TABLE [dbo].[projects] ADD  DEFAULT (newid()) FOR [id]
+GO
+ALTER TABLE [dbo].[projects] ADD  DEFAULT ('#0d9488') FOR [color]
+GO
+ALTER TABLE [dbo].[projects] ADD  DEFAULT ((0)) FOR [progress_percentage]
+GO
+ALTER TABLE [dbo].[projects] ADD  DEFAULT ((1)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[projects] ADD  DEFAULT (getutcdate()) FOR [created_at]
+GO
+ALTER TABLE [dbo].[projects] ADD  DEFAULT (getutcdate()) FOR [updated_at]
+GO
+ALTER TABLE [dbo].[refunds_deductions] ADD  CONSTRAINT [DF_refunds_deductions_created_at]  DEFAULT (sysdatetime()) FOR [created_at]
+GO
+ALTER TABLE [dbo].[refunds_deductions_attachments] ADD  CONSTRAINT [DF_refunds_deductions_attachments_created_at]  DEFAULT (sysdatetime()) FOR [created_at]
+GO
+ALTER TABLE [dbo].[time_entries] ADD  DEFAULT (newid()) FOR [id]
+GO
+ALTER TABLE [dbo].[time_entries] ADD  DEFAULT ((0)) FOR [break_minutes]
+GO
+ALTER TABLE [dbo].[time_entries] ADD  DEFAULT ('pending') FOR [status]
+GO
+ALTER TABLE [dbo].[time_entries] ADD  DEFAULT ((1)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[time_entries] ADD  DEFAULT (getutcdate()) FOR [created_at]
+GO
+ALTER TABLE [dbo].[time_entries] ADD  DEFAULT (getutcdate()) FOR [updated_at]
+GO
+ALTER TABLE [dbo].[time_entry_types] ADD  DEFAULT ((1)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[time_entry_types] ADD  DEFAULT (getutcdate()) FOR [created_at]
+GO
+ALTER TABLE [dbo].[time_entry_types] ADD  DEFAULT (getutcdate()) FOR [updated_at]
+GO
+ALTER TABLE [dbo].[user_module_permissions] ADD  DEFAULT ('view') FOR [permission_level]
+GO
+ALTER TABLE [dbo].[user_module_permissions] ADD  DEFAULT ((1)) FOR [is_allowed]
+GO
+ALTER TABLE [dbo].[user_module_permissions] ADD  DEFAULT (sysutcdatetime()) FOR [created_at]
+GO
+ALTER TABLE [dbo].[user_sessions] ADD  DEFAULT (newid()) FOR [id]
+GO
+ALTER TABLE [dbo].[user_sessions] ADD  DEFAULT (getutcdate()) FOR [last_activity_at]
+GO
+ALTER TABLE [dbo].[user_sessions] ADD  DEFAULT ((1)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[user_sessions] ADD  DEFAULT (getutcdate()) FOR [created_at]
+GO
+ALTER TABLE [dbo].[users] ADD  DEFAULT (newid()) FOR [id]
+GO
+ALTER TABLE [dbo].[users] ADD  DEFAULT ('field_worker') FOR [role]
+GO
+ALTER TABLE [dbo].[users] ADD  DEFAULT ((1)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[users] ADD  DEFAULT (getutcdate()) FOR [created_at]
+GO
+ALTER TABLE [dbo].[users] ADD  DEFAULT (getutcdate()) FOR [updated_at]
+GO
+ALTER TABLE [dbo].[expense_attachments]  WITH CHECK ADD FOREIGN KEY([expense_id])
+REFERENCES [dbo].[expenses] ([id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[expense_attachments]  WITH CHECK ADD FOREIGN KEY([uploaded_by])
+REFERENCES [dbo].[users] ([id])
+GO
+ALTER TABLE [dbo].[expenses]  WITH CHECK ADD FOREIGN KEY([approved_by])
+REFERENCES [dbo].[users] ([id])
+GO
+ALTER TABLE [dbo].[expenses]  WITH CHECK ADD FOREIGN KEY([expense_type_id])
+REFERENCES [dbo].[expense_types] ([id])
+GO
+ALTER TABLE [dbo].[expenses]  WITH CHECK ADD FOREIGN KEY([project_id])
+REFERENCES [dbo].[projects] ([id])
+GO
+ALTER TABLE [dbo].[expenses]  WITH CHECK ADD FOREIGN KEY([user_id])
+REFERENCES [dbo].[users] ([id])
+GO
+ALTER TABLE [dbo].[note_attachments]  WITH CHECK ADD FOREIGN KEY([note_id])
+REFERENCES [dbo].[project_notes] ([id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[note_attachments]  WITH CHECK ADD FOREIGN KEY([uploaded_by])
+REFERENCES [dbo].[users] ([id])
+GO
+ALTER TABLE [dbo].[project_assignments]  WITH CHECK ADD FOREIGN KEY([project_id])
+REFERENCES [dbo].[projects] ([id])
+GO
+ALTER TABLE [dbo].[project_assignments]  WITH CHECK ADD FOREIGN KEY([user_id])
+REFERENCES [dbo].[users] ([id])
+GO
+ALTER TABLE [dbo].[project_notes]  WITH CHECK ADD FOREIGN KEY([observation_type_id])
+REFERENCES [dbo].[observation_types] ([id])
+GO
+ALTER TABLE [dbo].[project_notes]  WITH CHECK ADD FOREIGN KEY([project_id])
+REFERENCES [dbo].[projects] ([id])
+GO
+ALTER TABLE [dbo].[project_notes]  WITH CHECK ADD FOREIGN KEY([user_id])
+REFERENCES [dbo].[users] ([id])
+GO
+ALTER TABLE [dbo].[projects]  WITH CHECK ADD FOREIGN KEY([client_id])
+REFERENCES [dbo].[clients] ([id])
+GO
+ALTER TABLE [dbo].[projects]  WITH CHECK ADD FOREIGN KEY([status_id])
+REFERENCES [dbo].[project_status] ([id])
+GO
+ALTER TABLE [dbo].[projects]  WITH CHECK ADD  CONSTRAINT [FK_projects_project_types] FOREIGN KEY([project_type_id])
+REFERENCES [dbo].[project_types] ([id])
+GO
+ALTER TABLE [dbo].[projects] CHECK CONSTRAINT [FK_projects_project_types]
+GO
+ALTER TABLE [dbo].[refunds_deductions]  WITH CHECK ADD  CONSTRAINT [FK_refunds_deductions_projects] FOREIGN KEY([project_id])
+REFERENCES [dbo].[projects] ([id])
+GO
+ALTER TABLE [dbo].[refunds_deductions] CHECK CONSTRAINT [FK_refunds_deductions_projects]
+GO
+ALTER TABLE [dbo].[refunds_deductions]  WITH CHECK ADD  CONSTRAINT [FK_refunds_deductions_users_approved_by] FOREIGN KEY([approved_by])
+REFERENCES [dbo].[users] ([id])
+GO
+ALTER TABLE [dbo].[refunds_deductions] CHECK CONSTRAINT [FK_refunds_deductions_users_approved_by]
+GO
+ALTER TABLE [dbo].[refunds_deductions]  WITH CHECK ADD  CONSTRAINT [FK_refunds_deductions_users_user] FOREIGN KEY([user_id])
+REFERENCES [dbo].[users] ([id])
+GO
+ALTER TABLE [dbo].[refunds_deductions] CHECK CONSTRAINT [FK_refunds_deductions_users_user]
+GO
+ALTER TABLE [dbo].[refunds_deductions_attachments]  WITH CHECK ADD  CONSTRAINT [FK_refunds_deductions_attachments_refunds_deductions] FOREIGN KEY([refund_deduction_id])
+REFERENCES [dbo].[refunds_deductions] ([id])
+GO
+ALTER TABLE [dbo].[refunds_deductions_attachments] CHECK CONSTRAINT [FK_refunds_deductions_attachments_refunds_deductions]
+GO
+ALTER TABLE [dbo].[refunds_deductions_attachments]  WITH CHECK ADD  CONSTRAINT [FK_refunds_deductions_attachments_users] FOREIGN KEY([uploaded_by])
+REFERENCES [dbo].[users] ([id])
+GO
+ALTER TABLE [dbo].[refunds_deductions_attachments] CHECK CONSTRAINT [FK_refunds_deductions_attachments_users]
+GO
+ALTER TABLE [dbo].[time_entries]  WITH CHECK ADD FOREIGN KEY([approved_by])
+REFERENCES [dbo].[users] ([id])
+GO
+ALTER TABLE [dbo].[time_entries]  WITH CHECK ADD FOREIGN KEY([entry_type_id])
+REFERENCES [dbo].[time_entry_types] ([id])
+GO
+ALTER TABLE [dbo].[time_entries]  WITH CHECK ADD FOREIGN KEY([project_id])
+REFERENCES [dbo].[projects] ([id])
+GO
+ALTER TABLE [dbo].[time_entries]  WITH CHECK ADD FOREIGN KEY([user_id])
+REFERENCES [dbo].[users] ([id])
+GO
+ALTER TABLE [dbo].[user_module_permissions]  WITH CHECK ADD FOREIGN KEY([module_id])
+REFERENCES [dbo].[app_modules] ([id])
+GO
+ALTER TABLE [dbo].[user_module_permissions]  WITH CHECK ADD FOREIGN KEY([user_id])
+REFERENCES [dbo].[users] ([id])
+GO
+ALTER TABLE [dbo].[user_sessions]  WITH CHECK ADD FOREIGN KEY([user_id])
+REFERENCES [dbo].[users] ([id])
+GO
