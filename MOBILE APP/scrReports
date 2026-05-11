@@ -1,0 +1,2138 @@
+Screens:
+  scrReports:
+    Properties:
+      Fill: =TertiaryColor
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: =Set(newExpense, false)
+    Children:
+      - ctnPageContent_8:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - ctnWelcome_8:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.Semibold
+                  Fill: =PrimaryTextColor
+                  FillPortions: =0
+                  Height: =App.Height * 9%
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMinHeight: =16
+                  LayoutMinWidth: =Parent.Width
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - ctnAvatar_7:
+                      Control: GroupContainer@1.5.0
+                      Variant: ManualLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =Parent.Height
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutMinWidth: =30
+                        RadiusBottomLeft: =10
+                        RadiusBottomRight: =10
+                        RadiusTopLeft: =10
+                        RadiusTopRight: =10
+                        Width: =Self.Height
+                      Children:
+                        - ctnLogoColor_23:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =ColorFade(PrimaryTextColor, 15%)
+                              Height: =Self.Width
+                              PaddingTop: =
+                              RadiusBottomLeft: =Self.Width
+                              RadiusBottomRight: =Self.Width
+                              RadiusTopLeft: =Self.Width
+                              RadiusTopRight: =Self.Width
+                              Width: =Parent.Width/2
+                              X: =(Parent.Width - Self.Width)/2
+                              Y: =(Parent.Height - Self.Height)/2
+                            Children:
+                              - ImageLogo_36:
+                                  Control: Image@2.2.3
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =Parent.Height
+                                    Image: |-
+                                      ="data:image/svg+xml;utf8, " & EncodeUrl(
+                                          Substitute(
+                                              LookUp(customIcons,IconName = "Back").IconData,
+                                              "currentColor", 
+                                              "RGBA(255,255,255,1)"
+                                          )
+                                      )
+                                    OnSelect: =Navigate(scrProjectsShortcuts, ScreenTransition.Fade)
+                                    PaddingBottom: =Self.Width/10
+                                    PaddingLeft: =Self.Width/10
+                                    PaddingRight: =Self.Width/10
+                                    PaddingTop: =Self.Width/10
+                                    Width: =Parent.Width*80%
+                                    X: =(Parent.Width-Self.Width)/2
+                                    Y: =
+                  - ctnWelcomeUser_8:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =12
+                        PaddingLeft: =8
+                        PaddingRight: =8
+                        PaddingTop: =8
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - txtName_9:
+                            Control: Text@0.0.51
+                            Properties:
+                              Align: ='TextCanvas.Align'.Start
+                              AlignInContainer: =AlignInContainer.Stretch
+                              AutoHeight: =true
+                              FillPortions: =1
+                              Font: =Font.'Segoe UI'
+                              FontColor: =RGBA(255, 255, 255, 1)
+                              Height: =Parent.Height/2
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              Size: =FontSize55
+                              Text: ="Job Reports"
+                              VerticalAlign: =VerticalAlign.Middle
+                              Weight: ='TextCanvas.Weight'.Bold
+                              Width: =250
+                        - txtProjectName_23:
+                            Control: Text@0.0.51
+                            Properties:
+                              Align: ='TextCanvas.Align'.Start
+                              AlignInContainer: =AlignInContainer.Start
+                              AutoHeight: =true
+                              FillPortions: =0.7
+                              Font: =Font.Lato
+                              FontColor: =RGBA(255, 255, 255, 1)
+                              Height: =
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              PaddingLeft: =1
+                              Size: =FontSize45
+                              Text: = _ProjectSelected.project_code & " - " & _ProjectSelected.project_name
+                              VerticalAlign: =VerticalAlign.Middle
+                              Weight: ='TextCanvas.Weight'.Regular
+                              Width: =Parent.Width
+                              Wrap: =false
+            - ctnMiddleContent_8:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =RGBA(0,0,0,0)
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMinHeight: =16
+                  LayoutMinWidth: =16
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - Container1_10:
+                      Control: GroupContainer@1.5.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =If(newExpense = true, App.Height*42%, App.Height*9%)
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =
+                      Children:
+                        - Container2_9:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.Regular
+                              Fill: =ColorFade(_ProjectSelected.ProjectColor, 85%)
+                              Height: =Parent.Height - (Parent.Width-Self.Width) * 65%
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              PaddingBottom: =Self.Height*2%
+                              PaddingLeft: =5
+                              PaddingRight: =5
+                              PaddingTop: =
+                              RadiusBottomLeft: =25
+                              RadiusBottomRight: =25
+                              RadiusTopLeft: =25
+                              RadiusTopRight: =25
+                              Width: =Parent.Width * 92%
+                              X: =(Parent.Width-Self.Width)/2
+                              Y: =(Parent.Height-Self.Height)/2
+                            Children:
+                              - ctnNewNote_5:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.SetByContainer
+                                    DropShadow: =DropShadow.None
+                                    FillPortions: =0
+                                    Height: =If(newExpense = true, Parent.Height*13%, Parent.Height)
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                  Children:
+                                    - ButtonCanvas2_5:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Align: =Align.Left
+                                          Appearance: ='ButtonCanvas.Appearance'.Outline
+                                          BorderStyle: =BorderStyle.None
+                                          Font: =Font.'Segoe UI'
+                                          FontColor: =_ProjectSelected.ProjectColor
+                                          FontSize: =FontSize50
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =Parent.Height
+                                          Icon: =If(newExpense, "Dismiss", "Add")
+                                          IconStyle: ='ButtonCanvas.IconStyle'.Filled
+                                          OnSelect: =If(newExpense, Set(newExpense, false), Set(newExpense, true))
+                                          Text: ="New Report"
+                                          VerticalAlign: =VerticalAlign.Middle
+                                          Width: =Parent.Width
+                              - txtWelcome_75:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Align: ='TextCanvas.Align'.Start
+                                    Font: =Font.'Segoe UI'
+                                    FontColor: =ColorFade(PrimaryTextColor, 40%)
+                                    Height: =App.Height*3%
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    PaddingLeft: =Parent.Width*3%
+                                    Size: =FontSize45
+                                    Text: ="Select type"
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =newExpense
+                                    Weight: ='TextCanvas.Weight'.Regular
+                                    Width: =250
+                                    Wrap: =false
+                              - galObservationTypeSelected_1:
+                                  Control: Gallery@2.15.0
+                                  Variant: Horizontal
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.SetByContainer
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: |-
+                                      =LookUp(Table(
+                                          {
+                                              id: 1,
+                                              name: "Contract",
+                                              code: "contract",
+                                              paleta: AcceptColor,
+                                              paleta_Text: AcceptColor_Text,
+                                              IconSvg: LookUp(customIcons, IconName = "contract").IconData
+                                          },
+                                          {
+                                              id: 2,
+                                              name: "Change Order",
+                                              code: "change_order",
+                                              paleta: AlertColor,
+                                              paleta_Text: AlertColor_Text,
+                                              IconSvg: LookUp(customIcons, IconName = "changeorder").IconData
+                                          }
+                                      ), id=1)
+                                    FillPortions: =0
+                                    Height: =Parent.Height*12%
+                                    Items: |-
+                                      =Table(
+                                          {
+                                              id: 1,
+                                              name: "Contract",
+                                              code: "contract",
+                                              paleta: AcceptColor,
+                                              paleta_Text: AcceptColor_Text,
+                                              IconSvg: LookUp(customIcons, IconName = "contract").IconData
+                                          },
+                                          {
+                                              id: 2,
+                                              name: "Change Order",
+                                              code: "change_order",
+                                              paleta: AlertColor,
+                                              paleta_Text: AlertColor_Text,
+                                              IconSvg: LookUp(customIcons, IconName = "changeorder").IconData
+                                          }
+                                      )
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    TemplateSize: =Parent.Width/2.2
+                                    Visible: =false
+                                    Width: =Parent.Width-8
+                                  Children:
+                                    - ctnStatus_7:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: ManualLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.Regular
+                                          Fill: =If(ThisItem.IsSelected, ColorFade(ThisItem.paleta, 75%), RGBA(255,255,255,1))
+                                          Height: =Parent.TemplateHeight*80%
+                                          RadiusBottomLeft: =20
+                                          RadiusBottomRight: =20
+                                          RadiusTopLeft: =20
+                                          RadiusTopRight: =20
+                                          Width: =Parent.TemplateWidth*90%
+                                          X: =(Parent.TemplateWidth-Self.Width)/2
+                                          Y: =(Parent.TemplateHeight-Self.Height)/2
+                                        Children:
+                                          - ButtonCanvas3_5:
+                                              Control: Button@0.0.45
+                                              Properties:
+                                                Align: =Align.Center
+                                                Appearance: ='ButtonCanvas.Appearance'.Transparent
+                                                BasePaletteColor: =ThisItem.paleta
+                                                Font: =Font.'Segoe UI'
+                                                FontColor: =If(ThisItem.IsSelected, ThisItem.paleta, PrimaryTextColor)
+                                                FontSize: =FontSize35
+                                                Height: =Parent.Height
+                                                Icon: =false
+                                                IconStyle: ='ButtonCanvas.IconStyle'.Outline
+                                                Layout: ='ButtonCanvas.Layout'.TextOnly
+                                                Text: =ThisItem.name
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Width: =Parent.Width
+                                          - Image8_1:
+                                              Control: Image@2.2.3
+                                              Properties:
+                                                BorderColor: =RGBA(0, 18, 107, 1)
+                                                Height: =30
+                                                Image: |-
+                                                  ="data:image/svg+xml;utf8," &
+                                                  EncodeUrl(
+                                                      Substitute(
+                                                          Substitute(
+                                                              Substitute(
+                                                                  ThisItem.IconSvg,
+                                                                  "&lt;",
+                                                                  "<"
+                                                              ),
+                                                              "&gt;",
+                                                              ">"
+                                                          ),
+                                                          "currentColor",
+                                                          Substitute(
+                                                              If(
+                                                                  !IsBlank(galObservationTypeSelected_1.Selected) && ThisItem.id = galObservationTypeSelected_1.Selected.id,
+                                                                  ThisItem.paleta_Text,
+                                                                  PrimaryTextColor_Text
+                                                              ),
+                                                              "RGBA",
+                                                              "rgba"
+                                                          )
+                                                      )
+                                                  )
+                                                Width: =30
+                                                X: =Parent.Width*10%
+                                                Y: =(Parent.Height-Self.Height)/2
+                              - txtWelcome_79:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Align: ='TextCanvas.Align'.Start
+                                    Font: =Font.'Segoe UI'
+                                    FontColor: =ColorFade(PrimaryTextColor, 40%)
+                                    Height: =App.Height*3%
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    PaddingLeft: =Parent.Width*3%
+                                    Size: =FontSize45
+                                    Text: ="Title"
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =newExpense
+                                    Weight: ='TextCanvas.Weight'.Regular
+                                    Width: =250
+                                    Wrap: =false
+                              - CTNSearch_12:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Center
+                                    BorderColor: =HighlightColor
+                                    DropShadow: =DropShadow.Regular
+                                    FillPortions: =0
+                                    Height: =Parent.Height*10%
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =Parent.Width*90%
+                                    RadiusBottomLeft: =20
+                                    RadiusBottomRight: =20
+                                    RadiusTopLeft: =20
+                                    RadiusTopRight: =20
+                                    Width: =Parent.Width*95%
+                                  Children:
+                                    - txtReportTitle:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          Align: =Align.Left
+                                          Appearance: ='TextInputCanvas.Appearance'.FilledLighter
+                                          Font: =Font.'Lato Light'
+                                          FontColor: =PrimaryTextColor
+                                          FontSize: =FontSize40
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =Parent.Height
+                                          Mode: ='TextInputCanvas.Mode'.SingleLine
+                                          OnChange: =
+                                          Placeholder: =
+                                          TriggerOutput: ='TextInputCanvas.TriggerOutput'.FocusOut
+                                          Value: =
+                                          Width: =Parent.Width
+                              - txtWelcome_80:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Align: ='TextCanvas.Align'.Start
+                                    Font: =Font.'Segoe UI'
+                                    FontColor: =ColorFade(PrimaryTextColor, 20%)
+                                    Height: =App.Height*1%
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    PaddingLeft: =Parent.Width*3%
+                                    Size: =FontSize50
+                                    Text: =
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =newNote
+                                    Weight: ='TextCanvas.Weight'.Regular
+                                    Width: =250
+                                    Wrap: =false
+                              - txtWelcome_81:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Align: ='TextCanvas.Align'.Start
+                                    Font: =Font.'Segoe UI'
+                                    FontColor: =ColorFade(PrimaryTextColor, 40%)
+                                    Height: =App.Height*3%
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    PaddingLeft: =Parent.Width*3%
+                                    Size: =FontSize45
+                                    Text: ="Description"
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =newExpense
+                                    Weight: ='TextCanvas.Weight'.Regular
+                                    Width: =250
+                                    Wrap: =false
+                              - CTNSearch_13:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Center
+                                    BorderColor: =HighlightColor
+                                    DropShadow: =DropShadow.Regular
+                                    Height: =
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =Parent.Width*90%
+                                    RadiusBottomLeft: =20
+                                    RadiusBottomRight: =20
+                                    RadiusTopLeft: =20
+                                    RadiusTopRight: =20
+                                    Width: =Parent.Width*95%
+                                  Children:
+                                    - txtReportDescription:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          Align: =Align.Left
+                                          Appearance: ='TextInputCanvas.Appearance'.FilledLighter
+                                          Font: =Font.'Lato Light'
+                                          FontColor: =PrimaryTextColor
+                                          FontSize: =FontSize40
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =Parent.Height
+                                          Mode: ='TextInputCanvas.Mode'.Multiline
+                                          OnChange: =
+                                          Placeholder: =
+                                          TriggerOutput: ='TextInputCanvas.TriggerOutput'.Delayed
+                                          Value: =
+                                          Width: =Parent.Width
+                              - Container13_5:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Center
+                                    DropShadow: =DropShadow.None
+                                    FillPortions: =0
+                                    Height: =Parent.Height*13%
+                                    LayoutAlignItems: =LayoutAlignItems.End
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    PaddingBottom: =5
+                                    PaddingTop: =15
+                                    Width: =Parent.Width*95%
+                                  Children:
+                                    - ButtonCanvas4_11:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Appearance: ='ButtonCanvas.Appearance'.Secondary
+                                          BasePaletteColor: =_ProjectSelected.ProjectColor
+                                          BorderColor: =_ProjectSelected.ProjectColor
+                                          BorderRadius: =20
+                                          Font: =Font.'Segoe UI'
+                                          FontColor: =ColorFade(_ProjectSelected.ProjectColor, 0%)
+                                          FontSize: =FontSize40
+                                          Height: =Parent.Height*75%
+                                          Icon: ="Camera"
+                                          IconStyle: ='ButtonCanvas.IconStyle'.Outline
+                                          LayoutMinHeight: =16
+                                          LayoutMinWidth: =16
+                                          OnSelect: =Set(_NewRDAttachments, true)
+                                          Text: ="Add photo"
+                                          Width: =Parent.Width*35%
+                                    - ButtonCanvas4_12:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Appearance: ='ButtonCanvas.Appearance'.Primary
+                                          BasePaletteColor: =_ProjectSelected.ProjectColor
+                                          BorderRadius: =20
+                                          DisplayMode: =If(txtReportTitle.Value <> "" && txtReportDescription.Value <> "", DisplayMode.Edit, DisplayMode.Disabled)
+                                          Font: =Font.'Segoe UI'
+                                          FontSize: =FontSize45-1
+                                          Height: =Parent.Height*75%
+                                          Icon: =
+                                          IconStyle: ='ButtonCanvas.IconStyle'.Outline
+                                          LayoutMinHeight: =16
+                                          LayoutMinWidth: =16
+                                          OnSelect: |-
+                                            =Set(_loading, true);
+
+                                            Set(NewReportID, First(sp_AddProjectNote.dbospAddProjectNote({
+                                                ProjectId:_ProjectSelected.project_id,
+                                                UserEmail:User().Email,
+                                                ObservationTypeCode: galObservationTypeSelected_1.Selected.code,
+                                                Title: txtReportTitle.Value,
+                                                Content: txtReportDescription.Value
+                                            }).ResultSets.Table1).note_id);
+                                            If(!IsBlank(NewReportID), Notify("The report was added correctly.", NotificationType.Success), Notify("The report could not be added.", NotificationType.Error));
+
+                                            ForAll(colReportAttachments,
+                                            sp_AddNoteAttachment.dbospAddNoteAttachment({
+                                                NoteId:NewReportID,
+                                                FileName: "NoteAttachment_"&Now()&"_"&User().FullName&GUID(),
+                                                FileUrl: AzureBlobStorage.CreateFile("images", "NoteAttachment_"&Now()&"_"&User().FullName&GUID(), ThisRecord.Photo).Id,
+                                                SortOrder: ThisRecord.Sort,
+                                                UploadedByEmail: User().Email
+                                            }));
+
+                                            ClearCollect(colProjectNotes, sp_GetProjectNotes.dbospGetProjectNotes({ProjectId: _ProjectSelected.project_id, UserEmail: User().Email}).ResultSets.Table1);
+
+                                            Set(colWeeklySummaryHeader,sp_GetWeeklySummaryHeaderByEmail.dbospGetWeeklySummaryHeaderByEmail({UserEmail:User().Email,FromDate:Text(DDWeek.Selected.StartDate,"yyyy-mm-dd"),ToDate:Text(DDWeek.Selected.EndDate,"yyyy-mm-dd")}).ResultSets.Table1);
+                                            Set(colWeeklySummaryPerProject,sp_GetWeeklyHoursByProjectByEmail.dbospGetWeeklyHoursByProjectByEmail({UserEmail:User().Email,FromDate:Text(DDWeek.Selected.StartDate,"yyyy-mm-dd"),ToDate:Text(DDWeek.Selected.EndDate,"yyyy-mm-dd")}).ResultSets.Table1);
+                                            Set(colWeeklySummaryPerExpenses,sp_GetWeeklyExpensesByProjectByEmail.dbospGetWeeklyExpensesByProjectByEmail({UserEmail:User().Email,FromDate:Text(DDWeek.Selected.StartDate,"yyyy-mm-dd"),ToDate:Text(DDWeek.Selected.EndDate,"yyyy-mm-dd")}).ResultSets.Table1);
+                                            Set(colWeeklySummaryPerDay,sp_TimeEntry_GetWeeklyHistory.dbospTimeEntryGetWeeklyHistory({UserEmail:User().Email,FromDate:Text(DDWeek.Selected.StartDate,"yyyy-mm-dd"),ToDate:Text(DDWeek.Selected.EndDate,"yyyy-mm-dd")}).ResultSets.Table1);
+                                            Set(colWeeklySummaryPerRD, sp_GetWeeklyApprovedRefundsDeductionsByProjectByEmail.dbospGetWeeklyApprovedRefundsDeductionsByProjectByEmail({UserEmail:User().Email,FromDate:Text(DDWeek.Selected.StartDate,"yyyy-mm-dd"),ToDate:Text(DDWeek.Selected.EndDate,"yyyy-mm-dd")}).ResultSets.Table1);
+
+
+                                            Reset(galObservationTypeSelected_1); Reset(txtReportTitle); Reset(txtReportDescription); Clear(colReportAttachments);
+
+                                            Set(_loading, false);
+                                            /*/Set(
+                                                NewRDId;
+                                                    sp_RefundDeduction_Upsert.dbospRefundDeductionUpsert(
+                                                        {
+                                                            RDId:            Blank();
+                                                            ProjectId:       _ProjectSelected.project_id;
+                                                            UserEmail:       User().Email;
+                                                            Type:            galExpenseTypeSelected_3.Selected.code;
+                                                            Description:     txtExpenseDescription_4.Value;
+                                                            Amount:          Value(Right(txtExpenseAmount_4.Value; Len(txtExpenseAmount_4.Value)-If(galExpenseTypeSelected_3.Selected.id=1;1;3)));
+                                                            Currency:        "USD";
+                                                            EffectiveDate:     Text(Today();"yyyy-mm-dd");
+                                                            Status:          "pending";
+                                                            ActorEmail:      User().Email
+                                                        }
+                                                    ).OutputParameters.OutRDId
+                                            );;
+
+                                            If(
+                                                !IsBlank(NewRDId);
+                                                Notify(If(galExpenseTypeSelected_3.Selected.id=1;"Refund added successfully."; "The deduction was added correctly."); NotificationType.Success;2000);
+                                                Notify("The record could not be added."; NotificationType.Error)
+                                            );;
+
+                                            ForAll(
+                                                colRDAttachments;
+                                                sp_RefundDeductionAttachment_Add.dbospRefundDeductionAttachmentAdd(
+                                                    {
+                                                        RefundDeductionId:      NewRDId;
+                                                        FileName:       "RDAttachment_" & Now() & "_" & User().FullName & GUID();
+                                                        FileUrl:        AzureBlobStorage.CreateFile(
+                                                                            "images";
+                                                                            "RDAttachment_" & Now() & "_" & User().FullName & GUID();
+                                                                            ThisRecord.Photo
+                                                                        ).Id;
+                                                        SortOrder:      ThisRecord.Sort;
+                                                        UploadedByEmail: User().Email
+                                                    }
+                                                )
+                                            );;
+
+                                            ClearCollect(colProjectRefundsDeductions; sp_GetProjectRefundsDeductionsForUser.dbospGetProjectRefundsDeductionsForUser({ProjectId:(_ProjectSelected.project_id); UserEmail:User().Email}).ResultSets.Table1);;
+
+                                            Set(colWeeklySummaryHeader;sp_GetWeeklySummaryHeaderByEmail.dbospGetWeeklySummaryHeaderByEmail({UserEmail:User().Email;FromDate:Text(DDWeek.Selected.StartDate;"yyyy-mm-dd");ToDate:Text(DDWeek.Selected.EndDate;"yyyy-mm-dd")}).ResultSets.Table1);;
+                                            Set(colWeeklySummaryPerProject;sp_GetWeeklyHoursByProjectByEmail.dbospGetWeeklyHoursByProjectByEmail({UserEmail:User().Email;FromDate:Text(DDWeek.Selected.StartDate;"yyyy-mm-dd");ToDate:Text(DDWeek.Selected.EndDate;"yyyy-mm-dd")}).ResultSets.Table1);;
+                                            Set(colWeeklySummaryPerExpenses;sp_GetWeeklyExpensesByProjectByEmail.dbospGetWeeklyExpensesByProjectByEmail({UserEmail:User().Email;FromDate:Text(DDWeek.Selected.StartDate;"yyyy-mm-dd");ToDate:Text(DDWeek.Selected.EndDate;"yyyy-mm-dd")}).ResultSets.Table1);;
+                                            Set(colWeeklySummaryPerDay;sp_TimeEntry_GetWeeklyHistory.dbospTimeEntryGetWeeklyHistory({UserEmail:User().Email;FromDate:Text(DDWeek.Selected.StartDate;"yyyy-mm-dd");ToDate:Text(DDWeek.Selected.EndDate;"yyyy-mm-dd")}).ResultSets.Table1);;
+                                            Set(colWeeklySummaryPerRD; sp_GetWeeklyApprovedRefundsDeductionsByProjectByEmail.dbospGetWeeklyApprovedRefundsDeductionsByProjectByEmail({UserEmail:User().Email;FromDate:Text(DDWeek.Selected.StartDate;"yyyy-mm-dd");ToDate:Text(DDWeek.Selected.EndDate;"yyyy-mm-dd")}).ResultSets.Table1);;
+
+                                            Set(varMonto2;0);;
+                                            Reset(txtExpenseDescription_4);;
+                                            Clear(colRDAttachments);;/*/
+                                          Text: ="Save"
+                                          Width: =Parent.Width*25%
+                  - txtWelcome_82:
+                      Control: Text@0.0.51
+                      Properties:
+                        Align: ='TextCanvas.Align'.Start
+                        AlignInContainer: =AlignInContainer.Stretch
+                        Font: =Font.'Segoe UI'
+                        FontColor: =PrimaryTextColor
+                        Height: =App.Height*3%
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        PaddingLeft: =30
+                        Size: =FontSize45
+                        Text: ="Previous reported notes"
+                        VerticalAlign: =VerticalAlign.Top
+                        Weight: ='TextCanvas.Weight'.Regular
+                        Width: =250
+                        Wrap: =false
+                  - Gallery3_3:
+                      Control: Gallery@2.15.0
+                      Variant: VariableHeight
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Items: =colProjectNotes
+                        LayoutMaxHeight: =
+                        LayoutMaxWidth: =
+                        LayoutMinHeight: =350
+                        ShowScrollbar: =false
+                        TemplatePadding: =7
+                        TemplateSize: =App.Height*9%
+                        Transition: =Transition.Pop
+                        Width: =Parent.Width
+                      Children:
+                        - ctnExpenses_2:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.Regular
+                              Fill: =RGBA(255, 255, 255, 1)
+                              Height: =Parent.TemplateHeight * 95%
+                              RadiusBottomLeft: =27
+                              RadiusBottomRight: =27
+                              RadiusTopLeft: =27
+                              RadiusTopRight: =27
+                              Width: =Parent.TemplateWidth * 93%
+                              X: =(Parent.TemplateWidth - Self.Width)/2
+                              Y: =(Parent.TemplateHeight - Self.Height)/2
+                            Children:
+                              - ctnExpense_2:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    Height: =Parent.Height
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    Width: =Parent.Width
+                                  Children:
+                                    - ctnLogoProject_21:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: ManualLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          FillPortions: =0
+                                          LayoutMaxHeight: =
+                                          LayoutMaxWidth: =
+                                          LayoutMinHeight: =20
+                                          LayoutMinWidth: =30
+                                          Width: =Parent.Width*15%
+                                          X: =20
+                                        Children:
+                                          - ctnLogoColor_34:
+                                              Control: GroupContainer@1.5.0
+                                              Variant: ManualLayout
+                                              Properties:
+                                                DropShadow: =DropShadow.None
+                                                Fill: =ColorFade(If(ThisItem.observation_type_code= "contract", GreenColor, AlertColor), 90%)
+                                                Height: =Self.Width
+                                                RadiusBottomLeft: =Self.Width/3.2
+                                                RadiusBottomRight: =Self.Width/3.2
+                                                RadiusTopLeft: =Self.Width/3.2
+                                                RadiusTopRight: =Self.Width/3.2
+                                                Width: =Parent.Width/1.4
+                                                X: =(Parent.Width - Self.Width)/2
+                                                Y: =(Parent.Height - Self.Height)/2
+                                              Children:
+                                                - ImageLogo_38:
+                                                    Control: Image@2.2.3
+                                                    Properties:
+                                                      BorderColor: =RGBA(0, 18, 107, 1)
+                                                      Height: =Parent.Height
+                                                      Image: |-
+                                                        ="data:image/svg+xml;utf8, " & EncodeUrl(
+                                                            Substitute(
+                                                                LookUp(customIcons,IconName = ThisItem.observation_type_icon).IconData,
+                                                                "currentColor", 
+                                                                ThisItem.observation_type_color
+                                                            )
+                                                        )
+                                                      PaddingBottom: =Self.Width/4
+                                                      PaddingLeft: =Self.Width/4
+                                                      PaddingRight: =Self.Width/4
+                                                      PaddingTop: =Self.Width/4
+                                                      Width: =Parent.Width
+                                    - Container16_3:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: AutoLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          LayoutAlignItems: =LayoutAlignItems.Stretch
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutMinHeight: =Parent.Height
+                                          LayoutMinWidth: =16
+                                          PaddingBottom: =Parent.Height*8%
+                                          PaddingTop: =Parent.Height*8%
+                                        Children:
+                                          - Container17_8:
+                                              Control: GroupContainer@1.5.0
+                                              Variant: AutoLayout
+                                              Properties:
+                                                AlignInContainer: =AlignInContainer.SetByContainer
+                                                DropShadow: =DropShadow.None
+                                                Height: =Parent.Height*25%
+                                                LayoutAlignItems: =LayoutAlignItems.Center
+                                                LayoutDirection: =LayoutDirection.Horizontal
+                                                LayoutGap: =10
+                                                LayoutMinHeight: =40
+                                                LayoutMinWidth: =16
+                                                PaddingLeft: =2
+                                                Width: =Parent.Width*95%
+                                              Children:
+                                                - txtWelcome_84:
+                                                    Control: Text@0.0.51
+                                                    Properties:
+                                                      Align: ='TextCanvas.Align'.Start
+                                                      FillPortions: =1
+                                                      Font: =Font.'Segoe UI'
+                                                      FontColor: =ColorFade(PrimaryTextColor, 40%)
+                                                      Height: =App.Height*3%
+                                                      LayoutMaxHeight: =
+                                                      LayoutMaxWidth: =
+                                                      PaddingLeft: =Parent.Width*1%
+                                                      Size: =FontSize40
+                                                      Text: =Text(DateAdd(ThisItem.created_at, UTCDiff, TimeUnit.Hours), "[$-es-ES]dddd mm/dd/yyyy - HH:mm AM/PM")
+                                                      VerticalAlign: =VerticalAlign.Middle
+                                                      Weight: ='TextCanvas.Weight'.Regular
+                                                      Width: =250
+                                                      Wrap: =false
+                                          - Container17_7:
+                                              Control: GroupContainer@1.5.0
+                                              Variant: AutoLayout
+                                              Properties:
+                                                AlignInContainer: =AlignInContainer.SetByContainer
+                                                DropShadow: =DropShadow.None
+                                                FillPortions: =1.3
+                                                Height: =Parent.Height*25%
+                                                LayoutAlignItems: =LayoutAlignItems.Center
+                                                LayoutDirection: =LayoutDirection.Horizontal
+                                                LayoutMinHeight: =
+                                                LayoutMinWidth: =16
+                                              Children:
+                                                - txtWelcome_83:
+                                                    Control: Text@0.0.51
+                                                    Properties:
+                                                      Align: ='TextCanvas.Align'.Start
+                                                      AlignInContainer: =AlignInContainer.Center
+                                                      FillPortions: =1
+                                                      Font: =Font.'Segoe UI'
+                                                      FontColor: =PrimaryTextColor
+                                                      Height: =Parent.Height
+                                                      LayoutMaxHeight: =
+                                                      LayoutMaxWidth: =
+                                                      PaddingLeft: =Parent.Width*1%
+                                                      Size: =FontSize45
+                                                      Text: =ThisItem.title
+                                                      VerticalAlign: =VerticalAlign.Top
+                                                      Weight: ='TextCanvas.Weight'.Regular
+                                                      Width: =250
+                                    - Container1_11:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: AutoLayout
+                                        Properties:
+                                          FillPortions: =0
+                                          LayoutAlignItems: =LayoutAlignItems.Center
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutJustifyContent: =LayoutJustifyContent.Center
+                                          LayoutMinHeight: =16
+                                          LayoutMinWidth: =16
+                                          PaddingBottom: =Parent.Height*8%
+                                          PaddingRight: =4
+                                          PaddingTop: =Parent.Height*8%
+                                          Width: =Parent.Width*20%
+                                        Children:
+                                          - Container22_2:
+                                              Control: GroupContainer@1.5.0
+                                              Variant: AutoLayout
+                                              Properties:
+                                                AlignInContainer: =AlignInContainer.End
+                                                DropShadow: =DropShadow.None
+                                                FillPortions: =0.7
+                                                LayoutAlignItems: =LayoutAlignItems.Center
+                                                LayoutDirection: =LayoutDirection.Horizontal
+                                                LayoutJustifyContent: =LayoutJustifyContent.End
+                                                LayoutMinHeight: =16
+                                                LayoutMinWidth: =16
+                                                Width: =Parent.Width - 5
+                                              Children:
+                                                - ButtonCanvas13_5:
+                                                    Control: Button@0.0.45
+                                                    Properties:
+                                                      Align: =Align.Justify
+                                                      AlignInContainer: =AlignInContainer.Stretch
+                                                      Appearance: ='ButtonCanvas.Appearance'.Transparent
+                                                      BasePaletteColor: =PrimaryTextColor
+                                                      FontSize: =FontSize55
+                                                      Height: =45
+                                                      Icon: ="Eye"
+                                                      Layout: ='ButtonCanvas.Layout'.IconOnly
+                                                      LayoutMinHeight: =16
+                                                      LayoutMinWidth: =16
+                                                      OnSelect: |
+                                                        =Set(_loading, true);
+
+                                                        Set(_ReportSelected, ThisItem);
+
+                                                        ClearCollect(colReportAttachments2, sp_GetNoteAttachmentsByNoteId.dbospGetNoteAttachmentsByNoteId({NoteId:_ReportSelected.note_id}).ResultSets.Table1);
+
+                                                        Set(_editReport, true);
+
+                                                        Set(_loading, false);
+                                                      Width: =Parent.Width/2
+            - BottomMenu1_8:
+                Control: CanvasComponent
+                ComponentName: BottomMenu
+                Properties:
+                  Height: =Parent.Height*8%
+                  IconColor: ="RGBA(79; 90; 94; 1)"
+                  IdSelected: =MenuId
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinWidth: =Parent.Width
+                  Menu: =customNavigation
+                  TextColor: =RGBA(79, 90, 94, 1)
+                  TextSize: =FontSize35
+                  Width: =Parent.Width
+      - Timer1_5:
+          Control: Timer@2.1.0
+          Properties:
+            AutoStart: =true
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =ColorFade(Self.BorderColor, 70%)
+            DisabledColor: =ColorFade(Self.Fill, 90%)
+            DisabledFill: =ColorFade(Self.Fill, 70%)
+            Duration: =1000
+            Fill: =RGBA(56, 96, 178, 1)
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnTimerEnd: =Set(varNow, Now())
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Repeat: =true
+            Visible: =false
+            X: =168
+            Y: =936
+      - ctnRefundsDeductionsAttachments_1:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            Fill: =RGBA(0, 0, 0, 0.5)
+            Height: =Parent.Height
+            Visible: =_NewRDAttachments
+            Width: =Parent.Width
+          Children:
+            - ButtonCanvas7_7:
+                Control: Button@0.0.45
+                Properties:
+                  Appearance: ='ButtonCanvas.Appearance'.Transparent
+                  Height: =Parent.Height
+                  OnSelect: =
+                  Width: =Parent.Width
+            - Container11_5:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =Parent.Height*80%
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  PaddingTop: =App.Height*1%
+                  RadiusBottomLeft: =25
+                  RadiusBottomRight: =25
+                  RadiusTopLeft: =25
+                  RadiusTopRight: =25
+                  Width: =Parent.Width*85%
+                  X: =(Parent.Width-Self.Width)/2
+                  Y: =(Parent.Height-Self.Height)/2
+                Children:
+                  - Container10_6:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Center
+                        DropShadow: =DropShadow.Regular
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FillPortions: =0
+                        Height: =App.Height*6%
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+                        LayoutMinHeight: =50
+                        LayoutMinWidth: =150
+                        PaddingLeft: =App.Height*2%
+                        PaddingRight: =
+                        RadiusBottomLeft: =20
+                        RadiusBottomRight: =20
+                        RadiusTopLeft: =20
+                        RadiusTopRight: =20
+                        Width: =Parent.Width * 95%
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =Parent.Height*3%
+                      Children:
+                        - txtWelcome_45:
+                            Control: Text@0.0.51
+                            Properties:
+                              Align: ='TextCanvas.Align'.Start
+                              AlignInContainer: =AlignInContainer.Stretch
+                              FillPortions: =1
+                              Font: =Font.'Segoe UI'
+                              FontColor: =PrimaryTextColor
+                              Height: =App.Height*3%
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              Size: =FontSize40
+                              Text: ="Tap on the image to take your picture."
+                              VerticalAlign: =VerticalAlign.Middle
+                              Weight: ='TextCanvas.Weight'.Semibold
+                              Width: =250
+                              Wrap: =false
+                        - CTNEdit_3:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Center
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =40
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              LayoutMinWidth: =30
+                              RadiusBottomLeft: =10
+                              RadiusBottomRight: =10
+                              RadiusTopLeft: =10
+                              RadiusTopRight: =10
+                              Visible: =!IsBlank(FotoTomada)
+                              Width: =Parent.Width*7%
+                            Children:
+                              - ImageInsight1_8:
+                                  Control: Image@2.2.3
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =Parent.Height
+                                    Image: |-
+                                      ="data:image/svg+xml;utf8, " & EncodeUrl(
+                                          Substitute(
+                                              LookUp(customIcons,IconName = "Trash").IconData,
+                                              "currentColor", 
+                                              AlertColor_Text
+                                          )
+                                      )
+                                    PaddingBottom: =5
+                                    PaddingLeft: =5
+                                    PaddingRight: =5
+                                    PaddingTop: =5
+                                    Width: =Parent.Width
+                              - Button2_152:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderStyle: =BorderStyle.None
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =RGBA(0, 0, 0, 0)
+                                    FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+                                    Height: =Parent.Height
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =varHoverFill
+                                    OnSelect: |-
+                                      =Set(FotoTomada, Blank());
+                                      UpdateContext({FotoConfirmed: false})
+                                    PaddingBottom: =6
+                                    PaddingLeft: =6
+                                    PaddingRight: =6
+                                    PaddingTop: =6
+                                    PressedFill: =RGBA(0,0,0,0.2)
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Text: =""
+                                    Tooltip: =
+                                    Width: =Parent.Width
+                        - CTNEdit_8:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Center
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =40
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              LayoutMinWidth: =30
+                              RadiusBottomLeft: =10
+                              RadiusBottomRight: =10
+                              RadiusTopLeft: =10
+                              RadiusTopRight: =10
+                              Visible: =If(!IsBlank(FotoTomada), false, true)
+                              Width: =Parent.Width*10%
+                            Children:
+                              - ImageInsight1_13:
+                                  Control: Image@2.2.3
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =Parent.Height
+                                    Image: |-
+                                      ="data:image/svg+xml;utf8, " & EncodeUrl(
+                                          Substitute(
+                                              LookUp(customIcons,IconName = "TurnCamera").IconData,
+                                              "currentColor", 
+                                              PrimaryTextColor_Text
+                                          )
+                                      )
+                                    Width: =Parent.Width
+                              - Button2_157:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderStyle: =BorderStyle.None
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =RGBA(0, 0, 0, 0)
+                                    FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+                                    Height: =Parent.Height
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =varHoverFill
+                                    OnSelect: =Set(CameraFrontal4, !CameraFrontal4);
+                                    PaddingBottom: =2
+                                    PaddingLeft: =2
+                                    PaddingRight: =2
+                                    PaddingTop: =2
+                                    PressedFill: =RGBA(0,0,0,0.2)
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Text: =""
+                                    Tooltip: =
+                                    Width: =Parent.Width
+                        - ctnLogoProject_27:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.SetByContainer
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =Parent.Height
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              Width: =App.Width*9%
+                              X: =20
+                            Children:
+                              - ctnLogoColor_37:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =Self.Width
+                                    RadiusBottomLeft: =Self.Width/3.2
+                                    RadiusBottomRight: =Self.Width/3.2
+                                    RadiusTopLeft: =Self.Width/3.2
+                                    RadiusTopRight: =Self.Width/3.2
+                                    Width: =Parent.Width*90%
+                                    X: =(Parent.Width - Self.Width)/2
+                                    Y: =(Parent.Height - Self.Height)/2
+                                  Children:
+                                    - ImageLogo_40:
+                                        Control: Image@2.2.3
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Height: =Parent.Height
+                                          Image: |-
+                                            ="data:image/svg+xml;utf8, " & EncodeUrl(
+                                                Substitute(
+                                                    LookUp(customIcons,IconName = "Exit").IconData,
+                                                    "currentColor", 
+                                                    AlertColor_Text
+                                                )
+                                            )
+                                          PaddingBottom: =Self.Width/10
+                                          PaddingLeft: =Self.Width/10
+                                          PaddingRight: =Self.Width/10
+                                          PaddingTop: =Self.Width/10
+                                          Width: =Parent.Width
+                                    - ButtonCanvas12_2:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Appearance: ='ButtonCanvas.Appearance'.Transparent
+                                          Height: =Parent.Height
+                                          IconStyle: ='ButtonCanvas.IconStyle'.Outline
+                                          OnSelect: =Set(_NewRDAttachments, false)
+                                          Text: =
+                                          Width: =Parent.Width
+                  - Container14_10:
+                      Control: GroupContainer@1.5.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =1.5
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                      Children:
+                        - Camera2_5:
+                            Control: Camera@2.4.0
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 0)
+                              Camera: =If(CameraFrontal4, 1, 0)
+                              Height: =Parent.Height
+                              OnSelect: |-
+                                =Collect(
+                                    colReportAttachments,
+                                    {
+                                        Photo: Camera2_5.Photo,
+                                        Date: Now(),
+                                        Sort: Last(colReportAttachments).Sort+1
+                                    }
+                                )
+                              Visible: =If(!IsBlank(FotoTomada), false, true)
+                              Width: =Parent.Width - 40
+                              X: =20
+                  - Container14_11:
+                      Control: GroupContainer@1.5.0
+                      Variant: ManualLayout
+                      Properties:
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                      Children:
+                        - Gallery2_7:
+                            Control: Gallery@2.15.0
+                            Variant: Horizontal
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Height: =Parent.Height
+                              Items: =Sort(colReportAttachments, Date, SortOrder.Descending)
+                              TemplateSize: =Parent.Height * 70%
+                              Width: =Parent.Width
+                            Children:
+                              - Container19_5:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Height: =Parent.TemplateHeight
+                                    Width: =Parent.TemplateWidth
+                                  Children:
+                                    - Image2_5:
+                                        Control: Image@2.2.3
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Height: =Parent.Height*90%
+                                          Image: =ThisItem.Photo
+                                          OnSelect: =Remove(colReportAttachments, ThisItem)
+                                          Width: =Parent.Width*90%
+                                          X: =(Parent.Width-Self.Width)/2
+                                          Y: =(Parent.Height-Self.Height)/2
+                  - Container6_5:
+                      Control: GroupContainer@1.5.0
+                      Variant: ManualLayout
+                      Properties:
+                        FillPortions: =0
+                        Height: =App.Height*10%
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                      Children:
+                        - ButtonCanvas8_5:
+                            Control: Button@0.0.45
+                            Properties:
+                              BasePaletteColor: =GreenColor
+                              BorderRadius: =20
+                              FontSize: =FontSize40
+                              Height: =Parent.Height*50%
+                              OnSelect: =Set(_NewRDAttachments, false)
+                              Text: ="Upload pictures"
+                              Width: =Parent.Width*40%
+                              X: =(Parent.Width - Self.Width)/2
+                              Y: =(Parent.Height - Self.Height)/2
+      - Popup_EditReport:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            Fill: =RGBA(0, 0, 0, 0.5)
+            Height: =Parent.Height
+            Visible: =_editReport
+            Width: =Parent.Width
+          Children:
+            - ButtonCanvas7_8:
+                Control: Button@0.0.45
+                Properties:
+                  Appearance: ='ButtonCanvas.Appearance'.Transparent
+                  Height: =Parent.Height
+                  OnSelect: =Set(_editReport, false)
+                  Width: =Parent.Width
+            - Container1_12:
+                Control: GroupContainer@1.5.0
+                Variant: ManualLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Height: =App.Height * 70%
+                  PaddingBottom: =
+                  Width: =Parent.Width
+                  X: =(Parent.Width-Self.Width)/2
+                  Y: =(Parent.Height-Self.Height)/2
+                Children:
+                  - Container2_10:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.Regular
+                        Fill: =ColorFade(_ProjectSelected.ProjectColor, 85%)
+                        Height: =Parent.Height
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
+                        LayoutDirection: =LayoutDirection.Vertical
+                        PaddingBottom: =Self.Height*2%
+                        PaddingLeft: =5
+                        PaddingRight: =5
+                        PaddingTop: =
+                        RadiusBottomLeft: =25
+                        RadiusBottomRight: =25
+                        RadiusTopLeft: =25
+                        RadiusTopRight: =25
+                        Width: =Parent.Width * 92%
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =(Parent.Height-Self.Height)/2
+                      Children:
+                        - ctnNewNote_6:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.SetByContainer
+                              DropShadow: =DropShadow.None
+                              Height: =Parent.Height*13%
+                              LayoutMaxHeight: =70
+                              LayoutMinHeight: =30
+                              LayoutMinWidth: =16
+                            Children:
+                              - ButtonCanvas2_6:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Align: =Align.Left
+                                    Appearance: ='ButtonCanvas.Appearance'.Outline
+                                    BorderStyle: =BorderStyle.None
+                                    Font: =Font.'Segoe UI'
+                                    FontColor: =_ProjectSelected.ProjectColor
+                                    FontSize: =FontSize50
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =Parent.Height
+                                    Icon: |-
+                                      =If(With(
+                                          {
+                                              NowNY: DateAdd( Now(), First(NYUTC).timediff, TimeUnit.Hours ),
+                                              CreatedNY: DateAdd( _ReportSelected.created_at, First(NYUTC).timediff, TimeUnit.Hours )
+                                          },
+                                          With(
+                                              {
+                                                  StartOfWeekNY: DateAdd(
+                                                      DateValue( NowNY ),
+                                                      -( Weekday( NowNY, StartOfWeek.Sunday ) - 1 ),
+                                                      TimeUnit.Days
+                                                  ),
+                                                  EndOfWeekNY: DateAdd(
+                                                      DateValue( NowNY ),
+                                                      -( Weekday( NowNY, StartOfWeek.Sunday ) - 1 ),
+                                                      TimeUnit.Days
+                                                  )
+                                              },
+                                              !(CreatedNY >= StartOfWeekNY &&
+                                              CreatedNY < DateAdd( StartOfWeekNY, 7, TimeUnit.Days ))
+                                          )
+                                      )=true, "Eye", "Edit")
+                                    IconStyle: ='ButtonCanvas.IconStyle'.Filled
+                                    OnSelect: =
+                                    Text: |-
+                                      =If(With(
+                                          {
+                                              NowNY: DateAdd( Now(), First(NYUTC).timediff, TimeUnit.Hours ),
+                                              CreatedNY: DateAdd( _ReportSelected.created_at, First(NYUTC).timediff, TimeUnit.Hours )
+                                          },
+                                          With(
+                                              {
+                                                  StartOfWeekNY: DateAdd(
+                                                      DateValue( NowNY ),
+                                                      -( Weekday( NowNY, StartOfWeek.Sunday ) - 1 ),
+                                                      TimeUnit.Days
+                                                  ),
+                                                  EndOfWeekNY: DateAdd(
+                                                      DateValue( NowNY ),
+                                                      -( Weekday( NowNY, StartOfWeek.Sunday ) - 1 ),
+                                                      TimeUnit.Days
+                                                  )
+                                              },
+                                              !(CreatedNY >= StartOfWeekNY &&
+                                              CreatedNY < DateAdd( StartOfWeekNY, 7, TimeUnit.Days ))
+                                          )
+                                      )=true, "View Report", "Edit Report")
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Width: =Parent.Width
+                              - ButtonCanvas2_7:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Align: =Align.Left
+                                    Appearance: ='ButtonCanvas.Appearance'.Outline
+                                    BorderStyle: =BorderStyle.None
+                                    Font: =Font.'Segoe UI'
+                                    FontColor: =_ProjectSelected.ProjectColor
+                                    FontSize: =FontSize50
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =Parent.Height
+                                    Icon: ="Dismiss"
+                                    IconStyle: ='ButtonCanvas.IconStyle'.Filled
+                                    OnSelect: =Set(_editReport, false)
+                                    Text: =
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Width: =Parent.Width*10%
+                                    X: =Parent.Width-Self.Width
+                        - txtWelcome_85:
+                            Control: Text@0.0.51
+                            Properties:
+                              Align: ='TextCanvas.Align'.Start
+                              Font: =Font.'Segoe UI'
+                              FontColor: =ColorFade(PrimaryTextColor, 40%)
+                              Height: =App.Height*3%
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              PaddingLeft: =Parent.Width*3%
+                              Size: =FontSize45
+                              Text: ="Select type"
+                              VerticalAlign: =VerticalAlign.Middle
+                              Weight: ='TextCanvas.Weight'.Regular
+                              Width: =250
+                              Wrap: =false
+                        - galObservationTypeSelected_2:
+                            Control: Gallery@2.15.0
+                            Variant: Horizontal
+                            Properties:
+                              AlignInContainer: =AlignInContainer.SetByContainer
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Default: |-
+                                =LookUp(Table(
+                                    {
+                                        id: 1,
+                                        name: "Contract",
+                                        code: "contract",
+                                        paleta: AcceptColor,
+                                        paleta_Text: AcceptColor_Text,
+                                        IconSvg: LookUp(customIcons, IconName = "contract").IconData
+                                    },
+                                    {
+                                        id: 2,
+                                        name: "Change Order",
+                                        code: "change_order",
+                                        paleta: AlertColor,
+                                        paleta_Text: AlertColor_Text,
+                                        IconSvg: LookUp(customIcons, IconName = "changeorder").IconData
+                                    }
+                                ), code = _ReportSelected.observation_type_code)
+                              FillPortions: =1.2
+                              Height: =Parent.Height*12%
+                              Items: |-
+                                =Table(
+                                    {
+                                        id: 1,
+                                        name: "Contract",
+                                        code: "contract",
+                                        paleta: AcceptColor,
+                                        paleta_Text: AcceptColor_Text,
+                                        IconSvg: LookUp(customIcons, IconName = "contract").IconData
+                                    },
+                                    {
+                                        id: 2,
+                                        name: "Change Order",
+                                        code: "change_order",
+                                        paleta: AlertColor,
+                                        paleta_Text: AlertColor_Text,
+                                        IconSvg: LookUp(customIcons, IconName = "changeorder").IconData
+                                    }
+                                )
+                              LayoutMaxHeight: =70
+                              LayoutMaxWidth: =
+                              LayoutMinHeight: =60
+                              TemplateSize: =Parent.Width/2.2
+                              Visible: =false
+                              Width: =Parent.Width-8
+                            Children:
+                              - ctnStatus_8:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.Regular
+                                    Fill: =If(ThisItem.IsSelected, ColorFade(ThisItem.paleta, 75%), RGBA(255,255,255,1))
+                                    Height: =Parent.TemplateHeight*80%
+                                    RadiusBottomLeft: =20
+                                    RadiusBottomRight: =20
+                                    RadiusTopLeft: =20
+                                    RadiusTopRight: =20
+                                    Width: =Parent.TemplateWidth*90%
+                                    X: =(Parent.TemplateWidth-Self.Width)/2
+                                    Y: =(Parent.TemplateHeight-Self.Height)/2
+                                  Children:
+                                    - ButtonCanvas3_6:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Align: =Align.Center
+                                          Appearance: ='ButtonCanvas.Appearance'.Transparent
+                                          BasePaletteColor: =ThisItem.paleta
+                                          Font: =Font.'Segoe UI'
+                                          FontColor: =If(ThisItem.IsSelected, ThisItem.paleta, PrimaryTextColor)
+                                          FontSize: =FontSize35
+                                          Height: =Parent.Height
+                                          Icon: =false
+                                          IconStyle: ='ButtonCanvas.IconStyle'.Outline
+                                          Layout: ='ButtonCanvas.Layout'.TextOnly
+                                          Text: =ThisItem.name
+                                          VerticalAlign: =VerticalAlign.Middle
+                                          Width: =Parent.Width
+                                    - Image8_2:
+                                        Control: Image@2.2.3
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Height: =30
+                                          Image: |-
+                                            ="data:image/svg+xml;utf8," &
+                                            EncodeUrl(
+                                                Substitute(
+                                                    Substitute(
+                                                        Substitute(
+                                                            ThisItem.IconSvg,
+                                                            "&lt;",
+                                                            "<"
+                                                        ),
+                                                        "&gt;",
+                                                        ">"
+                                                    ),
+                                                    "currentColor",
+                                                    Substitute(
+                                                        If(
+                                                            !IsBlank(galObservationTypeSelected_2.Selected) && ThisItem.id = galObservationTypeSelected_2.Selected.id,
+                                                            ThisItem.paleta_Text,
+                                                            PrimaryTextColor_Text
+                                                        ),
+                                                        "RGBA",
+                                                        "rgba"
+                                                    )
+                                                )
+                                            )
+                                          Width: =30
+                                          X: =Parent.Width*10%
+                                          Y: =(Parent.Height-Self.Height)/2
+                        - txtWelcome_86:
+                            Control: Text@0.0.51
+                            Properties:
+                              Align: ='TextCanvas.Align'.Start
+                              Font: =Font.'Segoe UI'
+                              FontColor: =ColorFade(PrimaryTextColor, 40%)
+                              Height: =App.Height*3%
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              PaddingLeft: =Parent.Width*3%
+                              Size: =FontSize45
+                              Text: ="Title"
+                              VerticalAlign: =VerticalAlign.Middle
+                              Weight: ='TextCanvas.Weight'.Regular
+                              Width: =250
+                              Wrap: =false
+                        - CTNSearch_14:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Center
+                              BorderColor: =HighlightColor
+                              DropShadow: =DropShadow.Regular
+                              FillPortions: =0.8
+                              Height: =Parent.Height*10%
+                              LayoutMaxHeight: =60
+                              LayoutMaxWidth: =Parent.Width*90%
+                              LayoutMinHeight: =60
+                              RadiusBottomLeft: =20
+                              RadiusBottomRight: =20
+                              RadiusTopLeft: =20
+                              RadiusTopRight: =20
+                              Width: =Parent.Width*95%
+                            Children:
+                              - txtReportTitle2:
+                                  Control: TextInput@0.0.54
+                                  Properties:
+                                    Align: =Align.Left
+                                    Appearance: ='TextInputCanvas.Appearance'.FilledLighter
+                                    Font: =Font.'Lato Light'
+                                    FontColor: =PrimaryTextColor
+                                    FontSize: =FontSize40
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =Parent.Height
+                                    Mode: ='TextInputCanvas.Mode'.SingleLine
+                                    OnChange: =
+                                    Placeholder: =
+                                    TriggerOutput: ='TextInputCanvas.TriggerOutput'.FocusOut
+                                    Value: =_ReportSelected.title
+                                    Width: =Parent.Width
+                        - txtWelcome_87:
+                            Control: Text@0.0.51
+                            Properties:
+                              Align: ='TextCanvas.Align'.Start
+                              Font: =Font.'Segoe UI'
+                              FontColor: =ColorFade(PrimaryTextColor, 20%)
+                              Height: =App.Height*1%
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              PaddingLeft: =Parent.Width*3%
+                              Size: =FontSize50
+                              Text: =
+                              VerticalAlign: =VerticalAlign.Middle
+                              Weight: ='TextCanvas.Weight'.Regular
+                              Width: =250
+                              Wrap: =false
+                        - txtWelcome_88:
+                            Control: Text@0.0.51
+                            Properties:
+                              Align: ='TextCanvas.Align'.Start
+                              Font: =Font.'Segoe UI'
+                              FontColor: =ColorFade(PrimaryTextColor, 40%)
+                              Height: =App.Height*3%
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              PaddingLeft: =Parent.Width*3%
+                              Size: =FontSize45
+                              Text: ="Description"
+                              VerticalAlign: =VerticalAlign.Middle
+                              Weight: ='TextCanvas.Weight'.Regular
+                              Width: =250
+                              Wrap: =false
+                        - CTNSearch_15:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Center
+                              BorderColor: =HighlightColor
+                              DropShadow: =DropShadow.Regular
+                              FillPortions: =2
+                              Height: =
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =Parent.Width*90%
+                              LayoutMinHeight: =80
+                              RadiusBottomLeft: =20
+                              RadiusBottomRight: =20
+                              RadiusTopLeft: =20
+                              RadiusTopRight: =20
+                              Width: =Parent.Width*95%
+                            Children:
+                              - txtReportDescription2:
+                                  Control: TextInput@0.0.54
+                                  Properties:
+                                    Align: =Align.Left
+                                    Appearance: ='TextInputCanvas.Appearance'.FilledLighter
+                                    Font: =Font.'Lato Light'
+                                    FontColor: =PrimaryTextColor
+                                    FontSize: =FontSize40
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =Parent.Height
+                                    Mode: ='TextInputCanvas.Mode'.Multiline
+                                    OnChange: =
+                                    Placeholder: =
+                                    TriggerOutput: ='TextInputCanvas.TriggerOutput'.Delayed
+                                    Value: =_ReportSelected.content
+                                    Width: =Parent.Width
+                        - Gallery2_9:
+                            Control: Gallery@2.15.0
+                            Variant: Horizontal
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              FillPortions: =2
+                              Height: =Parent.Height
+                              Items: =Sort(colReportAttachments2, Date, SortOrder.Descending)
+                              TemplateSize: =Parent.Width * 47%
+                              Width: =Parent.Width
+                            Children:
+                              - Container19_7:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Height: =Parent.TemplateHeight
+                                    Width: =Parent.TemplateWidth
+                                  Children:
+                                    - Image2_7:
+                                        Control: Image@2.2.3
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Height: =Parent.Height*90%
+                                          Image: =IfError(AzureBlobStorage.GetFileContent(ThisItem.file_url), ThisItem.Photo)
+                                          OnSelect: |-
+                                            =Set(PhotoToShow, If(IsBlank(ThisItem.Photo), AzureBlobStorage.GetFileContent(ThisItem.file_url),ThisItem.Photo));
+                                            Set(_viewPhoto, true)
+                                          Width: =Parent.Width*90%
+                                          X: =(Parent.Width-Self.Width)/2
+                                          Y: =(Parent.Height-Self.Height)/2
+                        - Container13_6:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Center
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =App.Height*6%
+                              LayoutAlignItems: =LayoutAlignItems.End
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              PaddingBottom: =5
+                              PaddingTop: =15
+                              Visible: |-
+                                =With(
+                                    {
+                                        NowNY: DateAdd( Now(), First(NYUTC).timediff, TimeUnit.Hours ),
+                                        CreatedNY: DateAdd( _ReportSelected.created_at, First(NYUTC).timediff, TimeUnit.Hours )
+                                    },
+                                    With(
+                                        {
+                                            StartOfWeekNY: DateAdd(
+                                                DateValue( NowNY ),
+                                                -( Weekday( NowNY, StartOfWeek.Sunday ) - 1 ),
+                                                TimeUnit.Days
+                                            ),
+                                            EndOfWeekNY: DateAdd(
+                                                DateValue( NowNY ),
+                                                -( Weekday( NowNY, StartOfWeek.Sunday ) - 1 ),
+                                                TimeUnit.Days
+                                            )
+                                        },
+                                        CreatedNY >= StartOfWeekNY &&
+                                        CreatedNY < DateAdd( StartOfWeekNY, 7, TimeUnit.Days )
+                                    )
+                                )
+                              Width: =Parent.Width*95%
+                            Children:
+                              - ButtonCanvas4_13:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Appearance: ='ButtonCanvas.Appearance'.Secondary
+                                    BasePaletteColor: =_ProjectSelected.ProjectColor
+                                    BorderColor: =_ProjectSelected.ProjectColor
+                                    BorderRadius: =20
+                                    Font: =Font.'Segoe UI'
+                                    FontColor: =ColorFade(_ProjectSelected.ProjectColor, 0%)
+                                    FontSize: =FontSize40
+                                    Height: =Parent.Height*75%
+                                    Icon: ="Camera"
+                                    IconStyle: ='ButtonCanvas.IconStyle'.Outline
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    OnSelect: =Set(_EditReportAttachments, true)
+                                    Text: ="Add photos"
+                                    Width: =Parent.Width*40%
+                              - ButtonCanvas4_15:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Appearance: ='ButtonCanvas.Appearance'.Primary
+                                    BasePaletteColor: =AlertColor
+                                    BorderRadius: =20
+                                    DisplayMode: =If(txtReportTitle2.Value <> "" && txtReportDescription2.Value <> "", DisplayMode.Edit, DisplayMode.Disabled)
+                                    Font: =Font.'Segoe UI'
+                                    FontSize: =FontSize45-1
+                                    Height: =Parent.Height*75%
+                                    Icon: =
+                                    IconStyle: ='ButtonCanvas.IconStyle'.Outline
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    OnSelect: |-
+                                      =/*/
+                                      Set(_loading; true);;
+
+                                      ClearCollect(colProjectNotes; sp_GetProjectNotes.dbospGetProjectNotes({ProjectId: _ProjectSelected.project_id; UserEmail: User().Email}).ResultSets.Table1);;
+
+                                      Set(colWeeklySummaryHeader;sp_GetWeeklySummaryHeaderByEmail.dbospGetWeeklySummaryHeaderByEmail({UserEmail:User().Email;FromDate:Text(DDWeek.Selected.StartDate;"yyyy-mm-dd");ToDate:Text(DDWeek.Selected.EndDate;"yyyy-mm-dd")}).ResultSets.Table1);;
+                                      Set(colWeeklySummaryPerProject;sp_GetWeeklyHoursByProjectByEmail.dbospGetWeeklyHoursByProjectByEmail({UserEmail:User().Email;FromDate:Text(DDWeek.Selected.StartDate;"yyyy-mm-dd");ToDate:Text(DDWeek.Selected.EndDate;"yyyy-mm-dd")}).ResultSets.Table1);;
+                                      Set(colWeeklySummaryPerExpenses;sp_GetWeeklyExpensesByProjectByEmail.dbospGetWeeklyExpensesByProjectByEmail({UserEmail:User().Email;FromDate:Text(DDWeek.Selected.StartDate;"yyyy-mm-dd");ToDate:Text(DDWeek.Selected.EndDate;"yyyy-mm-dd")}).ResultSets.Table1);;
+                                      Set(colWeeklySummaryPerDay;sp_TimeEntry_GetWeeklyHistory.dbospTimeEntryGetWeeklyHistory({UserEmail:User().Email;FromDate:Text(DDWeek.Selected.StartDate;"yyyy-mm-dd");ToDate:Text(DDWeek.Selected.EndDate;"yyyy-mm-dd")}).ResultSets.Table1);;
+                                      Set(colWeeklySummaryPerRD; sp_GetWeeklyApprovedRefundsDeductionsByProjectByEmail.dbospGetWeeklyApprovedRefundsDeductionsByProjectByEmail({UserEmail:User().Email;FromDate:Text(DDWeek.Selected.StartDate;"yyyy-mm-dd");ToDate:Text(DDWeek.Selected.EndDate;"yyyy-mm-dd")}).ResultSets.Table1);;
+
+                                      Set(_loading; false);;
+                                      Set(_editExpenses; false);;
+                                      /*/
+                                    Text: ="Delete"
+                                    Width: =Parent.Width*25%
+                              - ButtonCanvas4_14:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Appearance: ='ButtonCanvas.Appearance'.Primary
+                                    BasePaletteColor: =RGBA(8, 222, 8, 1)
+                                    BorderRadius: =20
+                                    DisplayMode: =If(txtReportTitle2.Value <> "" && txtReportDescription2.Value <> "", DisplayMode.Edit, DisplayMode.Disabled)
+                                    Font: =Font.'Segoe UI'
+                                    FontSize: =FontSize45-1
+                                    Height: =Parent.Height*75%
+                                    Icon: =
+                                    IconStyle: ='ButtonCanvas.IconStyle'.Outline
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    OnSelect: "=Set(_loading, true);\nSet(\n    EditedReportId,\n        sp_ProjectNote_Update.dbospProjectNoteUpdate(\n            {   \n                NoteId:                 _ReportSelected.note_id,\n                ProjectId:              _ProjectSelected.project_id,\n                UserEmail:              User().Email,\n                ObservationTypeId:      galObservationTypeSelected_2.Selected.id,\n                Title:                  txtReportTitle2.Value,\n                Content: txtReportDescription2.Value                \n            }\n        )\n);\n/*/\nIf(\n    !IsBlank(NewExpenseId);\n    Notify(\"Se agregó correctamente el gasto.\"; NotificationType.Success;2000);\n    Notify(\"No se pudo agregar el gasto.\"; NotificationType.Error)\n);;\n/*/\nForAll(\n    Filter(colReportAttachments2, file_url = \"\"),\n    sp_AddNoteAttachment.dbospAddNoteAttachment({\n        NoteId:_ReportSelected.note_id,\n        FileName: \"NoteAttachment_\"&Now()&\"_\"&User().FullName&GUID(),\n        FileUrl: AzureBlobStorage.CreateFile(\"images\", \"NoteAttachment_\"&Now()&\"_\"&User().FullName&GUID(), ThisRecord.Photo).Id,\n        SortOrder: ThisRecord.Sort,\n        UploadedByEmail: User().Email\n})\n);\nIf(!IsBlank(colReportsToDelete),\n    Set(varIdsCsv, Concat(colReportsToDelete, expense_attachments_id, \",\"));\n    sp_ReportAttachmentsDeactivateByIdsCsv.dbospReportAttachmentsDeactivateByIdsCsv({IdsCsv:varIdsCsv}));\n    \nClear(colReportsToDelete);\n\nClearCollect(colProjectNotes, sp_GetProjectNotes.dbospGetProjectNotes({ProjectId: _ProjectSelected.project_id, UserEmail: User().Email}).ResultSets.Table1);\n\nSet(colWeeklySummaryHeader,sp_GetWeeklySummaryHeaderByEmail.dbospGetWeeklySummaryHeaderByEmail({UserEmail:User().Email,FromDate:Text(DDWeek.Selected.StartDate,\"yyyy-mm-dd\"),ToDate:Text(DDWeek.Selected.EndDate,\"yyyy-mm-dd\")}).ResultSets.Table1);\nSet(colWeeklySummaryPerProject,sp_GetWeeklyHoursByProjectByEmail.dbospGetWeeklyHoursByProjectByEmail({UserEmail:User().Email,FromDate:Text(DDWeek.Selected.StartDate,\"yyyy-mm-dd\"),ToDate:Text(DDWeek.Selected.EndDate,\"yyyy-mm-dd\")}).ResultSets.Table1);\nSet(colWeeklySummaryPerExpenses,sp_GetWeeklyExpensesByProjectByEmail.dbospGetWeeklyExpensesByProjectByEmail({UserEmail:User().Email,FromDate:Text(DDWeek.Selected.StartDate,\"yyyy-mm-dd\"),ToDate:Text(DDWeek.Selected.EndDate,\"yyyy-mm-dd\")}).ResultSets.Table1);\nSet(colWeeklySummaryPerDay,sp_TimeEntry_GetWeeklyHistory.dbospTimeEntryGetWeeklyHistory({UserEmail:User().Email,FromDate:Text(DDWeek.Selected.StartDate,\"yyyy-mm-dd\"),ToDate:Text(DDWeek.Selected.EndDate,\"yyyy-mm-dd\")}).ResultSets.Table1);\nSet(colWeeklySummaryPerRD, sp_GetWeeklyApprovedRefundsDeductionsByProjectByEmail.dbospGetWeeklyApprovedRefundsDeductionsByProjectByEmail({UserEmail:User().Email,FromDate:Text(DDWeek.Selected.StartDate,\"yyyy-mm-dd\"),ToDate:Text(DDWeek.Selected.EndDate,\"yyyy-mm-dd\")}).ResultSets.Table1);\n\nSet(_loading, false);\nSet(_editReport, false);"
+                                    Text: ="Save"
+                                    Width: =Parent.Width*25%
+      - ctnEditReportsAttachments:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            Fill: =RGBA(0, 0, 0, 0.5)
+            Height: =Parent.Height
+            Visible: =_EditReportAttachments
+            Width: =Parent.Width
+          Children:
+            - ButtonCanvas7_9:
+                Control: Button@0.0.45
+                Properties:
+                  Appearance: ='ButtonCanvas.Appearance'.Transparent
+                  Height: =Parent.Height
+                  OnSelect: =Set(_EditExpenseAttachments, false)
+                  Width: =Parent.Width
+            - Container11_6:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =Parent.Height*80%
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  PaddingTop: =App.Height*1%
+                  RadiusBottomLeft: =25
+                  RadiusBottomRight: =25
+                  RadiusTopLeft: =25
+                  RadiusTopRight: =25
+                  Width: =Parent.Width*85%
+                  X: =(Parent.Width-Self.Width)/2
+                  Y: =(Parent.Height-Self.Height)/2
+                Children:
+                  - Container10_7:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Center
+                        DropShadow: =DropShadow.Regular
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FillPortions: =0
+                        Height: =App.Height*6%
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+                        LayoutMinHeight: =50
+                        LayoutMinWidth: =150
+                        PaddingLeft: =App.Height*2%
+                        PaddingRight: =
+                        RadiusBottomLeft: =20
+                        RadiusBottomRight: =20
+                        RadiusTopLeft: =20
+                        RadiusTopRight: =20
+                        Width: =Parent.Width * 95%
+                        X: =(Parent.Width-Self.Width)/2
+                        Y: =Parent.Height*3%
+                      Children:
+                        - txtWelcome_46:
+                            Control: Text@0.0.51
+                            Properties:
+                              Align: ='TextCanvas.Align'.Start
+                              AlignInContainer: =AlignInContainer.Stretch
+                              FillPortions: =1
+                              Font: =Font.'Segoe UI'
+                              FontColor: =PrimaryTextColor
+                              Height: =App.Height*3%
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              Size: =FontSize40
+                              Text: ="Tap on the image to take your picture."
+                              VerticalAlign: =VerticalAlign.Middle
+                              Weight: ='TextCanvas.Weight'.Semibold
+                              Width: =250
+                              Wrap: =false
+                        - CTNEdit_9:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Center
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =40
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              LayoutMinWidth: =30
+                              RadiusBottomLeft: =10
+                              RadiusBottomRight: =10
+                              RadiusTopLeft: =10
+                              RadiusTopRight: =10
+                              Visible: =!IsBlank(FotoTomada)
+                              Width: =Parent.Width*7%
+                            Children:
+                              - ImageInsight1_14:
+                                  Control: Image@2.2.3
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =Parent.Height
+                                    Image: |-
+                                      ="data:image/svg+xml;utf8, " & EncodeUrl(
+                                          Substitute(
+                                              LookUp(customIcons,IconName = "Trash").IconData,
+                                              "currentColor", 
+                                              AlertColor_Text
+                                          )
+                                      )
+                                    PaddingBottom: =5
+                                    PaddingLeft: =5
+                                    PaddingRight: =5
+                                    PaddingTop: =5
+                                    Width: =Parent.Width
+                              - Button2_158:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderStyle: =BorderStyle.None
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =RGBA(0, 0, 0, 0)
+                                    FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+                                    Height: =Parent.Height
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =varHoverFill
+                                    OnSelect: |-
+                                      =Set(FotoTomada, Blank());
+                                      UpdateContext({FotoConfirmed: false})
+                                    PaddingBottom: =6
+                                    PaddingLeft: =6
+                                    PaddingRight: =6
+                                    PaddingTop: =6
+                                    PressedFill: =RGBA(0,0,0,0.2)
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Text: =""
+                                    Tooltip: =
+                                    Width: =Parent.Width
+                        - CTNEdit_10:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Center
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =40
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              LayoutMinWidth: =30
+                              RadiusBottomLeft: =10
+                              RadiusBottomRight: =10
+                              RadiusTopLeft: =10
+                              RadiusTopRight: =10
+                              Visible: =If(!IsBlank(FotoTomada), false, true)
+                              Width: =Parent.Width*10%
+                            Children:
+                              - ImageInsight1_15:
+                                  Control: Image@2.2.3
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =Parent.Height
+                                    Image: |-
+                                      ="data:image/svg+xml;utf8, " & EncodeUrl(
+                                          Substitute(
+                                              LookUp(customIcons,IconName = "TurnCamera").IconData,
+                                              "currentColor", 
+                                              PrimaryTextColor_Text
+                                          )
+                                      )
+                                    Width: =Parent.Width
+                              - Button2_159:
+                                  Control: Classic/Button@2.2.0
+                                  Properties:
+                                    BorderStyle: =BorderStyle.None
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =RGBA(0, 0, 0, 0)
+                                    FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+                                    Height: =Parent.Height
+                                    HoverColor: =RGBA(255, 255, 255, 1)
+                                    HoverFill: =varHoverFill
+                                    OnSelect: =Set(CameraFrontal5, !CameraFrontal5);
+                                    PaddingBottom: =2
+                                    PaddingLeft: =2
+                                    PaddingRight: =2
+                                    PaddingTop: =2
+                                    PressedFill: =RGBA(0,0,0,0.2)
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Text: =""
+                                    Tooltip: =
+                                    Width: =Parent.Width
+                        - ctnLogoProject_28:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.SetByContainer
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =Parent.Height
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              Width: =App.Width*9%
+                              X: =20
+                            Children:
+                              - ctnLogoColor_38:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =Self.Width
+                                    RadiusBottomLeft: =Self.Width/3.2
+                                    RadiusBottomRight: =Self.Width/3.2
+                                    RadiusTopLeft: =Self.Width/3.2
+                                    RadiusTopRight: =Self.Width/3.2
+                                    Width: =Parent.Width*90%
+                                    X: =(Parent.Width - Self.Width)/2
+                                    Y: =(Parent.Height - Self.Height)/2
+                                  Children:
+                                    - ImageLogo_41:
+                                        Control: Image@2.2.3
+                                        Properties:
+                                          BorderColor: =RGBA(0, 18, 107, 1)
+                                          Height: =Parent.Height
+                                          Image: |-
+                                            ="data:image/svg+xml;utf8, " & EncodeUrl(
+                                                Substitute(
+                                                    LookUp(customIcons,IconName = "Exit").IconData,
+                                                    "currentColor", 
+                                                    AlertColor_Text
+                                                )
+                                            )
+                                          PaddingBottom: =Self.Width/10
+                                          PaddingLeft: =Self.Width/10
+                                          PaddingRight: =Self.Width/10
+                                          PaddingTop: =Self.Width/10
+                                          Width: =Parent.Width
+                                    - ButtonCanvas12_3:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Appearance: ='ButtonCanvas.Appearance'.Transparent
+                                          Height: =Parent.Height
+                                          IconStyle: ='ButtonCanvas.IconStyle'.Outline
+                                          OnSelect: =Set(_EditReportAttachments, false)
+                                          Text: =
+                                          Width: =Parent.Width
+                  - Container14_12:
+                      Control: GroupContainer@1.5.0
+                      Variant: ManualLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =1.5
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                      Children:
+                        - Camera2_6:
+                            Control: Camera@2.4.0
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 0)
+                              Camera: =If(CameraFrontal5, 1, 0)
+                              Height: =Parent.Height
+                              OnSelect: |-
+                                =Collect(
+                                    colReportAttachments2,
+                                    {
+                                        Photo: Camera2_6.Photo,
+                                        Date: Now(),
+                                        Sort: Last(colReportAttachments2).Sort+1,
+                                        file_url: ""
+                                    }
+                                )
+                              Visible: =If(!IsBlank(FotoTomada), false, true)
+                              Width: =Parent.Width - 40
+                              X: =20
+                  - Gallery2_12:
+                      Control: Gallery@2.15.0
+                      Variant: Horizontal
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Height: =Parent.Height
+                        Items: =Sort(colReportAttachments2, Date, SortOrder.Descending)
+                        LayoutMinWidth: =100
+                        TemplateSize: =Parent.Width * 47%
+                        Width: =Parent.Width
+                      Children:
+                        - Container19_10:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Height: =Parent.TemplateHeight
+                              Width: =Parent.TemplateWidth
+                            Children:
+                              - Image2_10:
+                                  Control: Image@2.2.3
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Height: =Parent.Height*90%
+                                    Image: =IfError(AzureBlobStorage.GetFileContent(ThisItem.file_url), ThisItem.Photo)
+                                    OnSelect: |-
+                                      =Set(PhotoToShow, If(IsBlank(ThisItem.Photo), AzureBlobStorage.GetFileContent(ThisItem.file_url),ThisItem.Photo));
+                                      Set(_viewPhoto, true)
+                                    Width: =Parent.Width*90%
+                                    X: =(Parent.Width-Self.Width)/2
+                                    Y: =(Parent.Height-Self.Height)/2
+                              - Icon1_3:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Color: =RGBA(215, 58, 60, 1)
+                                    Height: =Parent.Height*15%
+                                    Icon: =Icon.Trash
+                                    OnSelect: |-
+                                      =Set(_colReportAttachments2Selected, ThisItem);
+                                      Set(_popupConfirmDelete, true)
+                                    Visible: |-
+                                      =With(
+                                          {
+                                              NowNY: DateAdd( Now(), First(NYUTC).timediff, TimeUnit.Hours ),
+                                              CreatedNY: DateAdd( _ExpenseSelected.created_at, First(NYUTC).timediff, TimeUnit.Hours )
+                                          },
+                                          With(
+                                              {
+                                                  StartOfWeekNY: DateAdd(
+                                                      DateValue( NowNY ),
+                                                      -( Weekday( NowNY, StartOfWeek.Sunday ) - 1 ),
+                                                      TimeUnit.Days
+                                                  ),
+                                                  EndOfWeekNY: DateAdd(
+                                                      DateValue( NowNY ),
+                                                      -( Weekday( NowNY, StartOfWeek.Sunday ) - 1 ),
+                                                      TimeUnit.Days
+                                                  )
+                                              },
+                                              CreatedNY >= StartOfWeekNY &&
+                                              CreatedNY < DateAdd( StartOfWeekNY, 7, TimeUnit.Days )
+                                          )
+                                      )
+                                    Width: =Parent.Width*15%
+                                    X: =Parent.Width-Self.Width
+                  - Container6_6:
+                      Control: GroupContainer@1.5.0
+                      Variant: ManualLayout
+                      Properties:
+                        FillPortions: =0
+                        Height: =App.Height*10%
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                      Children:
+                        - ButtonCanvas8_6:
+                            Control: Button@0.0.45
+                            Properties:
+                              BasePaletteColor: =GreenColor
+                              BorderRadius: =20
+                              FontSize: =FontSize40
+                              Height: =Parent.Height*50%
+                              OnSelect: =Set(_EditReportAttachments, false)
+                              Text: ="Upload pictures"
+                              Width: =Parent.Width*40%
+                              X: =(Parent.Width - Self.Width)/2
+                              Y: =(Parent.Height - Self.Height)/2
+      - Popup_ViewPhoto_1:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Fill: =RGBA(0, 0, 0, 0.8)
+            Height: =Parent.Height
+            Visible: =_viewPhoto
+            Width: =Parent.Width
+          Children:
+            - Image3_1:
+                Control: Image@2.2.3
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Height: =Parent.Height*70%
+                  Image: =PhotoToShow
+                  Width: =Parent.Width*85%
+                  X: =(Parent.Width-Self.Width)/2
+                  Y: =(Parent.Height-Self.Height)/2
+            - Icon2_1:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(255, 255, 255, 1)
+                  Height: =App.Width*7%
+                  Icon: =Icon.Leave
+                  OnSelect: =Set(_viewPhoto, false)
+                  Width: =App.Width*7%
+                  X: =Parent.Width-Self.Width-Parent.Width*2%
+                  Y: =Parent.Height*2%
+      - Popup_ConfirmDelete_5:
+          Control: CanvasComponent
+          ComponentName: Popup_ConfirmDelete
+          Properties:
+            Height: =App.Height
+            OnSelectCancel: =Set(_popupConfirmDelete, false)
+            OnSelectYes: |-
+              =If(IsBlank(_colReportAttachments2Selected.file_url),
+              Remove(colReportAttachments2, _colReportAttachments2Selected), Collect(colReportsToDelete, {expense_attachments_id: _colExpenseAttachments2Selected.id});Remove(colReportAttachments2, _colReportAttachments2Selected));
+              Set(_popupConfirmDelete, false)
+            PopupText: ="Are you sure you want to delete this picture?"
+            Visible: =_popupConfirmDelete
+            Width: =App.Width
+            cancelColor: =RGBA(244,244,244,1)
+            deleteColor: =RGBA(209, 39, 40, 1)
+            textSize: =30
+      - Popup_Loading_5:
+          Control: CanvasComponent
+          ComponentName: Popup_Loading
+          Properties:
+            Fill: =RGBA(0, 0, 0, 0.03)
+            Height: =App.Height
+            Visible: =_loading
+            Width: =App.Width
