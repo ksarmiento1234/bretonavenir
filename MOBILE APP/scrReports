@@ -232,7 +232,7 @@ Screens:
                                     Size: =FontSize45
                                     Text: ="Select type"
                                     VerticalAlign: =VerticalAlign.Middle
-                                    Visible: =newExpense
+                                    Visible: =false
                                     Weight: ='TextCanvas.Weight'.Regular
                                     Width: =250
                                     Wrap: =false
@@ -538,7 +538,7 @@ Screens:
                                                 UploadedByEmail: User().Email
                                             }));
 
-                                            ClearCollect(colProjectNotes, sp_GetProjectNotes.dbospGetProjectNotes({ProjectId: _ProjectSelected.project_id, UserEmail: User().Email}).ResultSets.Table1);
+                                            ClearCollect(colProjectNotes, GetProjectNotesForMobile.dboGetProjectNotesForMobile({project_id:(_ProjectSelected.project_id), user_email:User().Email}).ResultSets.Table1);
 
                                             Set(colWeeklySummaryHeader,sp_GetWeeklySummaryHeaderByEmail.dbospGetWeeklySummaryHeaderByEmail({UserEmail:User().Email,FromDate:Text(DDWeek.Selected.StartDate,"yyyy-mm-dd"),ToDate:Text(DDWeek.Selected.EndDate,"yyyy-mm-dd")}).ResultSets.Table1);
                                             Set(colWeeklySummaryPerProject,sp_GetWeeklyHoursByProjectByEmail.dbospGetWeeklyHoursByProjectByEmail({UserEmail:User().Email,FromDate:Text(DDWeek.Selected.StartDate,"yyyy-mm-dd"),ToDate:Text(DDWeek.Selected.EndDate,"yyyy-mm-dd")}).ResultSets.Table1);
@@ -822,16 +822,31 @@ Screens:
                                                       Layout: ='ButtonCanvas.Layout'.IconOnly
                                                       LayoutMinHeight: =16
                                                       LayoutMinWidth: =16
-                                                      OnSelect: |
+                                                      OnSelect: |-
                                                         =Set(_loading, true);
 
                                                         Set(_ReportSelected, ThisItem);
 
-                                                        ClearCollect(colReportAttachments2, sp_GetNoteAttachmentsByNoteId.dbospGetNoteAttachmentsByNoteId({NoteId:_ReportSelected.note_id}).ResultSets.Table1);
+                                                        Set(varReportLastSavedTitle, Coalesce(ThisItem.title, ""));
+                                                        Set(varReportLastSavedDescription, Coalesce(ThisItem.content, ""));
+                                                        Set(varReportDraftDirty, false);
+                                                        Set(varReportIsSaving, false);
+                                                        Set(varReportEditStatus, "Saved");
+                                                        Set(varReportLastSavedAt, ThisItem.updated_at);
+                                                        Set(varReportLastChangedAt, Now());
+
+                                                        ClearCollect(
+                                                            colReportAttachments2,
+                                                            sp_GetNoteAttachmentsByNoteId.dbospGetNoteAttachmentsByNoteId(
+                                                                {
+                                                                    NoteId: _ReportSelected.note_id
+                                                                }
+                                                            ).ResultSets.Table1
+                                                        );
 
                                                         Set(_editReport, true);
 
-                                                        Set(_loading, false);
+                                                        Set(_loading, false)
                                                       Width: =Parent.Width/2
             - BottomMenu1_8:
                 Control: CanvasComponent
@@ -1331,27 +1346,23 @@ Screens:
                                     Height: =Parent.Height
                                     Icon: ="Dismiss"
                                     IconStyle: ='ButtonCanvas.IconStyle'.Filled
-                                    OnSelect: =Set(_editReport, false)
+                                    OnSelect: |-
+                                      =If(
+                                          varReportDraftDirty,
+                                          Notify(
+                                              "You have unsaved changes. Save your changes before closing this report.",
+                                              NotificationType.Warning
+                                          ),
+                                          Set(_editReport, false);
+                                          Set(varReportDraftDirty, false);
+                                          Set(varReportIsSaving, false);
+                                          Set(varReportEditStatus, "Saved");
+                                          Set(varReportHasChangedAt, false)
+                                      )
                                     Text: =
                                     VerticalAlign: =VerticalAlign.Middle
                                     Width: =Parent.Width*10%
                                     X: =Parent.Width-Self.Width
-                        - txtWelcome_85:
-                            Control: Text@0.0.51
-                            Properties:
-                              Align: ='TextCanvas.Align'.Start
-                              Font: =Font.'Segoe UI'
-                              FontColor: =ColorFade(PrimaryTextColor, 40%)
-                              Height: =App.Height*3%
-                              LayoutMaxHeight: =
-                              LayoutMaxWidth: =
-                              PaddingLeft: =Parent.Width*3%
-                              Size: =FontSize45
-                              Text: ="Select type"
-                              VerticalAlign: =VerticalAlign.Middle
-                              Weight: ='TextCanvas.Weight'.Regular
-                              Width: =250
-                              Wrap: =false
                         - galObservationTypeSelected_2:
                             Control: Gallery@2.15.0
                             Variant: Horizontal
@@ -1514,10 +1525,17 @@ Screens:
                                     FontWeight: =FontWeight.Semibold
                                     Height: =Parent.Height
                                     Mode: ='TextInputCanvas.Mode'.SingleLine
-                                    OnChange: =
+                                    OnChange: |-
+                                      =If(
+                                          txtReportTitle2.Value <> varReportLastSavedTitle ||
+                                          txtReportDescription2.Value <> varReportLastSavedDescription,
+                                          Set(varReportDraftDirty, true);
+                                          Set(varReportEditStatus, "Unsaved");
+                                          Set(varReportLastChangedAt, Now())
+                                      )
                                     Placeholder: =
-                                    TriggerOutput: ='TextInputCanvas.TriggerOutput'.FocusOut
-                                    Value: =_ReportSelected.title
+                                    TriggerOutput: ='TextInputCanvas.TriggerOutput'.Delayed
+                                    Value: =Coalesce(_ReportSelected.title, "")
                                     Width: =Parent.Width
                         - txtWelcome_87:
                             Control: Text@0.0.51
@@ -1580,10 +1598,17 @@ Screens:
                                     FontWeight: =FontWeight.Semibold
                                     Height: =Parent.Height
                                     Mode: ='TextInputCanvas.Mode'.Multiline
-                                    OnChange: =
+                                    OnChange: |-
+                                      =If(
+                                          txtReportTitle2.Value <> varReportLastSavedTitle ||
+                                          txtReportDescription2.Value <> varReportLastSavedDescription,
+                                          Set(varReportDraftDirty, true);
+                                          Set(varReportEditStatus, "Unsaved");
+                                          Set(varReportLastChangedAt, Now())
+                                      )
                                     Placeholder: =
                                     TriggerOutput: ='TextInputCanvas.TriggerOutput'.Delayed
-                                    Value: =_ReportSelected.content
+                                    Value: =Coalesce(_ReportSelected.content, "")
                                     Width: =Parent.Width
                         - Gallery2_9:
                             Control: Gallery@2.15.0
@@ -1616,6 +1641,43 @@ Screens:
                                           Width: =Parent.Width*90%
                                           X: =(Parent.Width-Self.Width)/2
                                           Y: =(Parent.Height-Self.Height)/2
+                        - lblReportSaveStatus:
+                            Control: Text@0.0.51
+                            Properties:
+                              Align: ='TextCanvas.Align'.Start
+                              Font: =Font.'Segoe UI'
+                              FontColor: |-
+                                =Switch(
+                                    varReportEditStatus,
+                                    "Saving", ColorFade(PrimaryTextColor, 30%),
+                                    "Unsaved", AlertColor,
+                                    "Saved", AcceptColor,
+                                    "Error", AlertColor,
+                                    PrimaryTextColor
+                                )
+                              Height: =App.Height*3%
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              PaddingLeft: =Parent.Width*3%
+                              Size: =FontSize45
+                              Text: |-
+                                =Switch(
+                                    varReportEditStatus,
+                                    "Saving", "Saving changes...",
+                                    "Unsaved", "Unsaved changes",
+                                    "Saved",
+                                        If(
+                                            IsBlank(varReportLastSavedAt),
+                                            "All changes saved",
+                                            "Saved at " & Text(varReportLastSavedAt, "[$-en-US]hh:mm AM/PM")
+                                        ),
+                                    "Error", "Unable to save changes",
+                                    "All changes saved"
+                                )
+                              VerticalAlign: =VerticalAlign.Middle
+                              Weight: ='TextCanvas.Weight'.Regular
+                              Width: =250
+                              Wrap: =false
                         - Container13_6:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
@@ -1705,13 +1767,19 @@ Screens:
                                       /*/
                                     Text: ="Delete"
                                     Width: =Parent.Width*25%
-                              - ButtonCanvas4_14:
+                              - btnSaveEditReport:
                                   Control: Button@0.0.45
                                   Properties:
                                     Appearance: ='ButtonCanvas.Appearance'.Primary
                                     BasePaletteColor: =RGBA(8, 222, 8, 1)
                                     BorderRadius: =20
-                                    DisplayMode: =If(txtReportTitle2.Value <> "" && txtReportDescription2.Value <> "", DisplayMode.Edit, DisplayMode.Disabled)
+                                    DisplayMode: |-
+                                      =//If(txtReportTitle2.Value <> "" && txtReportDescription2.Value <> ""; DisplayMode.Edit; DisplayMode.Disabled)
+                                      If(
+                                          varReportIsSaving,
+                                          DisplayMode.Disabled,
+                                          DisplayMode.Edit
+                                      )
                                     Font: =Font.'Segoe UI'
                                     FontSize: =FontSize45-1
                                     Height: =Parent.Height*75%
@@ -1719,8 +1787,16 @@ Screens:
                                     IconStyle: ='ButtonCanvas.IconStyle'.Outline
                                     LayoutMinHeight: =16
                                     LayoutMinWidth: =16
-                                    OnSelect: "=Set(_loading, true);\nSet(\n    EditedReportId,\n        sp_ProjectNote_Update.dbospProjectNoteUpdate(\n            {   \n                NoteId:                 _ReportSelected.note_id,\n                ProjectId:              _ProjectSelected.project_id,\n                UserEmail:              User().Email,\n                ObservationTypeId:      galObservationTypeSelected_2.Selected.id,\n                Title:                  txtReportTitle2.Value,\n                Content: txtReportDescription2.Value                \n            }\n        )\n);\n/*/\nIf(\n    !IsBlank(NewExpenseId);\n    Notify(\"Se agregó correctamente el gasto.\"; NotificationType.Success;2000);\n    Notify(\"No se pudo agregar el gasto.\"; NotificationType.Error)\n);;\n/*/\nForAll(\n    Filter(colReportAttachments2, file_url = \"\"),\n    sp_AddNoteAttachment.dbospAddNoteAttachment({\n        NoteId:_ReportSelected.note_id,\n        FileName: \"NoteAttachment_\"&Now()&\"_\"&User().FullName&GUID(),\n        FileUrl: AzureBlobStorage.CreateFile(\"images\", \"NoteAttachment_\"&Now()&\"_\"&User().FullName&GUID(), ThisRecord.Photo).Id,\n        SortOrder: ThisRecord.Sort,\n        UploadedByEmail: User().Email\n})\n);\nIf(!IsBlank(colReportsToDelete),\n    Set(varIdsCsv, Concat(colReportsToDelete, expense_attachments_id, \",\"));\n    sp_ReportAttachmentsDeactivateByIdsCsv.dbospReportAttachmentsDeactivateByIdsCsv({IdsCsv:varIdsCsv}));\n    \nClear(colReportsToDelete);\n\nClearCollect(colProjectNotes, sp_GetProjectNotes.dbospGetProjectNotes({ProjectId: _ProjectSelected.project_id, UserEmail: User().Email}).ResultSets.Table1);\n\nSet(colWeeklySummaryHeader,sp_GetWeeklySummaryHeaderByEmail.dbospGetWeeklySummaryHeaderByEmail({UserEmail:User().Email,FromDate:Text(DDWeek.Selected.StartDate,\"yyyy-mm-dd\"),ToDate:Text(DDWeek.Selected.EndDate,\"yyyy-mm-dd\")}).ResultSets.Table1);\nSet(colWeeklySummaryPerProject,sp_GetWeeklyHoursByProjectByEmail.dbospGetWeeklyHoursByProjectByEmail({UserEmail:User().Email,FromDate:Text(DDWeek.Selected.StartDate,\"yyyy-mm-dd\"),ToDate:Text(DDWeek.Selected.EndDate,\"yyyy-mm-dd\")}).ResultSets.Table1);\nSet(colWeeklySummaryPerExpenses,sp_GetWeeklyExpensesByProjectByEmail.dbospGetWeeklyExpensesByProjectByEmail({UserEmail:User().Email,FromDate:Text(DDWeek.Selected.StartDate,\"yyyy-mm-dd\"),ToDate:Text(DDWeek.Selected.EndDate,\"yyyy-mm-dd\")}).ResultSets.Table1);\nSet(colWeeklySummaryPerDay,sp_TimeEntry_GetWeeklyHistory.dbospTimeEntryGetWeeklyHistory({UserEmail:User().Email,FromDate:Text(DDWeek.Selected.StartDate,\"yyyy-mm-dd\"),ToDate:Text(DDWeek.Selected.EndDate,\"yyyy-mm-dd\")}).ResultSets.Table1);\nSet(colWeeklySummaryPerRD, sp_GetWeeklyApprovedRefundsDeductionsByProjectByEmail.dbospGetWeeklyApprovedRefundsDeductionsByProjectByEmail({UserEmail:User().Email,FromDate:Text(DDWeek.Selected.StartDate,\"yyyy-mm-dd\"),ToDate:Text(DDWeek.Selected.EndDate,\"yyyy-mm-dd\")}).ResultSets.Table1);\n\nSet(_loading, false);\nSet(_editReport, false);"
-                                    Text: ="Save"
+                                    OnSelect: "=If(\n    !_editReport,\n    Notify(\n        \"No report is currently open for editing.\",\n        NotificationType.Warning\n    ),\n\n    With(\n        {\n            _saveTitle: txtReportTitle2.Value,\n            _saveContent: txtReportDescription2.Value\n        },\n\n        Set(varReportIsSaving, true);\n        Set(varReportEditStatus, \"Saving\");\n\n        IfError(\n            Set(\n                _ReportSaved,\n                First(\n                    sp_UpdateProjectNote.dbospUpdateProjectNote(\n                        {\n                            NoteId: _ReportSelected.note_id,\n                            UserEmail: User().Email,\n                            Title: _saveTitle,\n                            Content: _saveContent\n                        }\n                    ).ResultSets.Table1\n                )\n            ),\n\n            Set(varReportEditStatus, \"Error\");\n            Notify(\n                \"We couldn’t save your changes. Please try again.\",\n                NotificationType.Error\n            ),\n\n            Set(varReportLastSavedTitle, _saveTitle);\n            Set(varReportLastSavedDescription, _saveContent);\n            Set(varReportLastSavedAt, Now());\n            Set(varReportDraftDirty, false);\n            Set(varReportHasChangedAt, false);\n            Set(varReportEditStatus, \"Saved\");\n\n            Set(\n                _ReportSelected,\n                Patch(\n                    _ReportSelected,\n                    {\n                        title: _saveTitle,\n                        content: _saveContent,\n                        updated_at: Now()\n                    }\n                )\n            );\n\n            ClearCollect(colProjectNotes, GetProjectNotesForMobile.dboGetProjectNotesForMobile({project_id:(_ProjectSelected.project_id), user_email:User().Email}).ResultSets.Table1);\n\n            Notify(\n                \"Changes saved successfully.\",\n                NotificationType.Success\n            )\n        );\n\n        Set(varReportIsSaving, false)\n    )\n)\n\n/*/\nSet(_loading; true);;\nSet(\n    EditedReportId;\n        sp_ProjectNote_Update.dbospProjectNoteUpdate(\n            {   \n                NoteId:                 _ReportSelected.note_id;\n                ProjectId:              _ProjectSelected.project_id;\n                UserEmail:              User().Email;\n                ObservationTypeId:      galObservationTypeSelected_2.Selected.id;\n                Title:                  txtReportTitle2.Value;\n                Content: txtReportDescription2.Value                \n            }\n        )\n);;\n\nForAll(\n    Filter(colReportAttachments2; file_url = \"\");\n    sp_AddNoteAttachment.dbospAddNoteAttachment({\n        NoteId:_ReportSelected.note_id;\n        FileName: \"NoteAttachment_\"&Now()&\"_\"&User().FullName&GUID();\n        FileUrl: AzureBlobStorage.CreateFile(\"images\"; \"NoteAttachment_\"&Now()&\"_\"&User().FullName&GUID(); ThisRecord.Photo).Id;\n        SortOrder: ThisRecord.Sort;\n        UploadedByEmail: User().Email\n})\n);;\nIf(!IsBlank(colReportsToDelete);\n    Set(varIdsCsv; Concat(colReportsToDelete; expense_attachments_id; \",\"));;\n    sp_ReportAttachmentsDeactivateByIdsCsv.dbospReportAttachmentsDeactivateByIdsCsv({IdsCsv:varIdsCsv}));;\n    \nClear(colReportsToDelete);;\n\nClearCollect(colProjectNotes; sp_GetProjectNotes.dbospGetProjectNotes({ProjectId: _ProjectSelected.project_id; UserEmail: User().Email}).ResultSets.Table1);;\n\nSet(_loading; false);;\nSet(_editReport; false);;\n/*/"
+                                    Text: |-
+                                      =Switch(
+                                          varReportEditStatus,
+                                          "Saving", "Saving...",
+                                          "Unsaved", "Save",
+                                          "Saved", "Saved",
+                                          "Error", "Try again",
+                                          "Save"
+                                      )
                                     Width: =Parent.Width*25%
       - ctnEditReportsAttachments:
           Control: GroupContainer@1.5.0
@@ -2136,3 +2212,97 @@ Screens:
             Height: =App.Height
             Visible: =_loading
             Width: =App.Width
+      - tmrReportAutoSave:
+          Control: Timer@2.1.0
+          Properties:
+            AutoStart: =_editReport
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =ColorFade(Self.BorderColor, 70%)
+            DisabledColor: =ColorFade(Self.Fill, 90%)
+            DisabledFill: =ColorFade(Self.Fill, 70%)
+            Fill: =RGBA(56, 96, 178, 1)
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnTimerEnd: |-
+              =If(
+                  _editReport &&
+                  varReportDraftDirty &&
+                  !varReportIsSaving &&
+                  (
+                      txtReportTitle2.Value <> varReportLastSavedTitle ||
+                      txtReportDescription2.Value <> varReportLastSavedDescription
+                  ),
+
+                  With(
+                      {
+                          _saveTitle: txtReportTitle2.Value,
+                          _saveContent: txtReportDescription2.Value
+                      },
+
+                      Set(varReportIsSaving, true);
+                      Set(varReportEditStatus, "Saving");
+
+                      IfError(
+                          Set(
+                              _ReportSaved,
+                              First(
+                                  sp_UpdateProjectNote.dbospUpdateProjectNote(
+                                      {
+                                          NoteId: _ReportSelected.note_id,
+                                          UserEmail: User().Email,
+                                          Title: _saveTitle,
+                                          Content: _saveContent
+                                      }
+                                  ).ResultSets.Table1
+                              )
+                          ),
+
+                          Set(varReportEditStatus, "Error");
+                          Notify(
+                              "We couldn’t autosave your changes. Please check your connection and try again.",
+                              NotificationType.Error
+                          ),
+
+                          Set(varReportLastSavedTitle, _saveTitle);
+                          Set(varReportLastSavedDescription, _saveContent);
+                          Set(varReportLastSavedAt, Now());
+                          Set(varReportHasChangedAt, false);
+
+                          Set(
+                              _ReportSelected,
+                              Patch(
+                                  _ReportSelected,
+                                  {
+                                      title: _saveTitle,
+                                      content: _saveContent,
+                                      updated_at: Now()
+                                  }
+                              )
+                          );
+
+                          If(
+                              txtReportTitle2.Value = _saveTitle &&
+                              txtReportDescription2.Value = _saveContent,
+                              Set(varReportDraftDirty, false);
+                              Set(varReportEditStatus, "Saved"),
+                              Set(varReportDraftDirty, true);
+                              Set(varReportEditStatus, "Unsaved")
+                          );
+
+                          ClearCollect(colProjectNotes, GetProjectNotesForMobile.dboGetProjectNotesForMobile({project_id:(_ProjectSelected.project_id), user_email:User().Email}).ResultSets.Table1);
+                      );
+
+                      Set(varReportIsSaving, false)
+                  )
+              )
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Repeat: =true
+            Start: =_editReport
+            Visible: =false
+            X: =180
+            Y: =44
